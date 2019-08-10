@@ -2,7 +2,7 @@
   <div class="diagram">
     <h1 class="subtitle-1 grey--text">Diagram</h1>
 
-    <v-container class="my-5 canvas">
+    <v-container class="my-1 canvas">
     </v-container>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
   methods: {
     createSvg(){
       // 2. Use the margin convention practice 
-      var margin = {top: 200, right: 100, bottom: 100, left: 100}
+      var margin = {top: 50, right: 50, bottom: 50, left: 50}
         , width = window.innerWidth - margin.left - margin.right
         , height = window.innerHeight - margin.top - margin.bottom;
 
