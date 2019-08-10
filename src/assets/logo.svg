@@ -1,1 +1,113 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.5 100"><defs><style>.cls-1{fill:#1697f6;}.cls-2{fill:#7bc6ff;}.cls-3{fill:#1867c0;}.cls-4{fill:#aeddff;}</style></defs><title>Artboard 46</title><polyline class="cls-1" points="43.75 0 23.31 0 43.75 48.32"/><polygon class="cls-2" points="43.75 62.5 43.75 100 0 14.58 22.92 14.58 43.75 62.5"/><polyline class="cls-3" points="43.75 0 64.19 0 43.75 48.32"/><polygon class="cls-4" points="64.58 14.58 87.5 14.58 43.75 100 43.75 62.5 64.58 14.58"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="128"
+   height="128"
+   viewBox="0 0 33.866666 33.866668"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="C:\Users\inigo\GitHub\efm-tool\src\assets\logo.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="14.398438"
+     inkscape:cx="50.49159"
+     inkscape:cy="64"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="3840"
+     inkscape:window-height="2066"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid10" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-263.13331)">
+    <rect
+       id="rect3682"
+       width="12.700001"
+       height="8.4666653"
+       x="10.583333"
+       y="265.24997"
+       style="fill:#212121;fill-opacity:1;stroke-width:0.28541124" />
+    <rect
+       id="rect3684"
+       width="8.4666672"
+       height="4.2333274"
+       x="12.699999"
+       y="267.36664"
+       style="fill:#2196f3;fill-opacity:1;stroke-width:0.31955352" />
+    <rect
+       id="rect3682-4"
+       width="10.583333"
+       height="8.4666653"
+       x="2.1166666"
+       y="285.09372"
+       style="fill:#212121;fill-opacity:1;stroke-width:0.26054361" />
+    <rect
+       id="rect3684-0"
+       width="6.3500013"
+       height="4.2333274"
+       x="4.2333312"
+       y="287.21039"
+       style="fill:#ffc107;fill-opacity:1;stroke-width:0.27674147" />
+    <rect
+       id="rect3682-4-8"
+       width="10.583333"
+       height="8.4666653"
+       x="21.166666"
+       y="285.09372"
+       style="fill:#212121;fill-opacity:1;stroke-width:0.26054361" />
+    <rect
+       id="rect3684-0-5"
+       width="6.3500013"
+       height="4.2333274"
+       x="23.283331"
+       y="287.21039"
+       style="fill:#ffc107;fill-opacity:1;stroke-width:0.27674147" />
+    <path
+       style="fill:#212121;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 6.35,282.97706 v -4.23333 h 9.260416 l 10e-7,-2.91042 h 2.910416 l 0,2.91042 h 8.995833 v 4.23333 H 25.4 V 280.8604 H 8.4666667 v 2.11666 H 6.35"
+       id="path4527"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccc" />
+  </g>
+</svg>
