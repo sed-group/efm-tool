@@ -1,0 +1,380 @@
+{
+    "graph": {
+        "directed": true,
+        "type": "EF-M model",
+        "label": "Glue gun",
+        "metadata": {
+            "original-author": "Jakob Muller"
+        },
+        "nodes": [
+            {
+                "id": "0",
+                "type": "fr",
+                "label": "Provide stream of molten glue",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "1",
+                "type": "ds",
+                "label": "Glue Gun",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "2",
+                "type": "fr",
+                "label": "Melt glue stick",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "3",
+                "type": "c",
+                "label": "Glue stick material",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "4",
+                "type": "fr",
+                "label": "Guide glue onto surface",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "5",
+                "type": "fr",
+                "label": "Control gun",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "6",
+                "type": "c",
+                "label": "Ergonomics of human hand",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "7",
+                "type": "fr",
+                "label": "Feed glue stick",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "8",
+                "type": "c",
+                "label": "Glue stick size",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "9",
+                "type": "fr",
+                "label": "Contain parts",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "10",
+                "type": "fr",
+                "label": "Place gun down when not in use",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "11",
+                "type": "ds",
+                "label": "Thermal/electric element",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "12",
+                "type": "ds",
+                "label": "Nozzle",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "13",
+                "type": "ds",
+                "label": "Pistol grip",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "14",
+                "type": "ds",
+                "label": "Trigger mechanism",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "15",
+                "type": "ds",
+                "label": "Casing",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "id": "16",
+                "type": "ds",
+                "label": "Wire stand",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            }
+        ],
+        "edges": [
+            {
+                "source": "0",
+                "relation": "isb",
+                "target": "1",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "1",
+                "relation": "rf",
+                "target": "2",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "1",
+                "relation": "rf",
+                "target": "4",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "1",
+                "relation": "rf",
+                "target": "5",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "1",
+                "relation": "rf",
+                "target": "7",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "1",
+                "relation": "rf",
+                "target": "9",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "1",
+                "relation": "rf",
+                "target": "10",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "2",
+                "relation": "isb",
+                "target": "11",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "4",
+                "relation": "isb",
+                "target": "12",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "5",
+                "relation": "isb",
+                "target": "13",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "7",
+                "relation": "isb",
+                "target": "14",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "9",
+                "relation": "isb",
+                "target": "15",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "10",
+                "relation": "isb",
+                "target": "16",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "11",
+                "relation": "icb",
+                "target": "3",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "13",
+                "relation": "icb",
+                "target": "6",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "14",
+                "relation": "icb",
+                "target": "8",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "11",
+                "relation": "iw",
+                "target": "12",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "11",
+                "relation": "iw",
+                "target": "14",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "15",
+                "relation": "iw",
+                "target": "11",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "15",
+                "relation": "iw",
+                "target": "12",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "15",
+                "relation": "iw",
+                "target": "13",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "15",
+                "relation": "iw",
+                "target": "14",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            },
+            {
+                "source": "16",
+                "relation": "iw",
+                "target": "15",
+                "directed": true,
+                "label": "",
+                "metadata": {
+                    "user-defined": "values"
+                }
+            }
+        ]
+    }
+}

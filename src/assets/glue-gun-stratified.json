@@ -1,0 +1,104 @@
+[
+    {
+        "id": "0",
+        "type": "fr",
+        "label": "Provide stream of molten glue",
+        "parent": null
+    },
+    {
+        "id": "1",
+        "type": "ds",
+        "label": "Glue Gun",
+        "parent": "0"
+    },
+    {
+        "id": "2",
+        "type": "fr",
+        "label": "Melt glue stick",
+        "parent": "1"
+    },
+    {
+        "id": "3",
+        "type": "c",
+        "label": "Glue stick material",
+        "parent": "11"
+    },
+    {
+        "id": "4",
+        "type": "fr",
+        "label": "Guide glue onto surface",
+        "parent": "1"
+    },
+    {
+        "id": "5",
+        "type": "fr",
+        "label": "Control gun",
+        "parent": "1"
+    },
+    {
+        "id": "6",
+        "type": "c",
+        "label": "Ergonomics of human hand",
+        "parent": "13"
+    },
+    {
+        "id": "7",
+        "type": "fr",
+        "label": "Feed glue stick",
+        "parent": "1"
+    },
+    {
+        "id": "8",
+        "type": "c",
+        "label": "Glue stick size",
+        "parent": "14"
+    },
+    {
+        "id": "9",
+        "type": "fr",
+        "label": "Contain parts",
+        "parent": "1"
+    },
+    {
+        "id": "10",
+        "type": "fr",
+        "label": "Place gun down when not in use",
+        "parent": "1"
+    },
+    {
+        "id": "11",
+        "type": "ds",
+        "label": "Thermal/electric element",
+        "parent": "2"
+    },
+    {
+        "id": "12",
+        "type": "ds",
+        "label": "Nozzle",
+        "parent": "4"
+    },
+    {
+        "id": "13",
+        "type": "ds",
+        "label": "Pistol grip",
+        "parent": "5"
+    },
+    {
+        "id": "14",
+        "type": "ds",
+        "label": "Trigger mechanism",
+        "parent": "7"
+    },
+    {
+        "id": "15",
+        "type": "ds",
+        "label": "Casing",
+        "parent": "9"
+    },
+    {
+        "id": "16",
+        "type": "ds",
+        "label": "Wire stand",
+        "parent": "10"
+    }
+]
