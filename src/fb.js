@@ -4,7 +4,7 @@ import 'firebase/firestore'
 
   // Your web app's Firebase configuration
   var firebaseConfig = {
-    apiKey: "",
+    apiKey: "AIzaSyCo-LUGrmznhVH7LGws1TEJB0aKtVk11Jo",
     authDomain: "d3-firebase-tests.firebaseapp.com",
     databaseURL: "https://d3-firebase-tests.firebaseio.com",
     projectId: "d3-firebase-tests",

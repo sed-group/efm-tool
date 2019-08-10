@@ -1,9 +1,9 @@
 <template>
   <nav>
 
-    <v-snackbar v-model="snackbar" :timeout="4000" top color="success">
+    <v-snackbar v-model="snackbarProject" :timeout="4000" top color="success">
       <span>Awesome! You added a new project.</span>
-      <v-btn color="white" text @click="snackbar = false">Close</v-btn>
+      <v-btn color="white" text @click="snackbarProject = false">Close</v-btn>
     </v-snackbar>
 
     <v-app-bar text app class="elevation-0 grey lighten-5">
@@ -15,7 +15,7 @@
       <v-spacer></v-spacer>
 
       <!-- dropdown menu -->
-      <v-menu offset-y>
+<!--       <v-menu offset-y>
         <template v-slot:activator="{ on }">
           <v-btn text v-on="on" color="grey">
             <v-icon left>expand_more</v-icon>
@@ -27,24 +27,32 @@
             <v-list-item-title>{{ link.text }}</v-list-item-title>
           </v-list-item>
         </v-list>
-      </v-menu>
+      </v-menu> -->
 
-      <v-btn text color="grey">
-        <span>Sign Out</span>
-        <v-icon right>exit_to_app</v-icon>
+      <v-btn v-if="!user" text color="grey" :to="{ path: '/signup'}" append>
+        <span>Sign Up</span>
+        <v-icon right>mdi-account-plus</v-icon>
+      </v-btn>
+      <v-btn v-if="!user" text color="grey" :to="{ path: '/login'}" append>
+        <span>Login</span>
+        <v-icon right>mdi-login</v-icon>
+      </v-btn>
+      <v-btn v-if="user" text color="grey" @click="logout">
+        <span>Logout</span>
+        <v-icon right>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer app v-model="drawer" class="primary">
+    <v-navigation-drawer v-if="user" app v-model="drawer" class="primary">
       <v-layout column align-center>
-        <v-flex class="mt-5">
+        <v-flex class="mt-5 text-center">
           <v-avatar size="100">
-            <img class="text-lg-center" src="/avatar-1.png">
+            <img src="/inigo-alonso-fernandez.jpg">
           </v-avatar>
-          <p class="white--text subheading mt-1">The Net Ninja</p>
+          <p class="white--text subheading mt-1">{{ this.name }}</p>
         </v-flex>
         <v-flex class="mt-4 mb-3">
-          <Popup @projectAdded="snackbar = true" />
+          <Popup @projectAdded="snackbarProject = true" />
         </v-flex>
       </v-layout>
       <v-list>
@@ -64,6 +72,8 @@
 
 <script>
 import Popup from './Popup'
+import firebase from 'firebase'
+import db from '@/fb'
 
 export default {
   components: { Popup },
@@ -77,8 +87,38 @@ export default {
         { icon: 'person', text: 'Team', route: '/team' },
         { icon: 'poll', text: 'Diagram', route: '/diagram' }
       ],
-      snackbar: false
+      snackbarProject: false,
+      user: '',
+      name: '',
     }
+  },
+  created(){
+    // let user = firebase.auth().currentUser
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user){
+        this.user = user
+      } else {
+        this.user = null
+      }
+    })    
+  },
+  methods: {
+    logout(){
+      firebase.auth().signOut().then(() => {
+        this.$router.push({ name: 'Login' })
+      })
+    },
+  },
+  mounted(){
+    // get current user
+    let user = firebase.auth().currentUser
+    // find the user record and then update geocoords
+    db.collection('users').where('user_id', '==', user.uid).get()
+    .then(snapshot => {
+      snapshot.forEach((doc) => {
+        this.name = doc.data().name
+      })
+    })
   }
 }
 </script>

@@ -55,6 +55,7 @@
 
 <script>
 import db from '@/fb'
+import firebase from 'firebase'
 
 export default {
   name: 'Dashboard',
@@ -81,6 +82,17 @@ export default {
         }  
       })
     })
+  },
+  mounted(){
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        //console.log(user)
+      } else {
+        // No user is signed in.
+        //console.log('No user is signed in')
+      }
+    });
   }
 }
 </script>
