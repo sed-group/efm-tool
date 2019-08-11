@@ -9,7 +9,7 @@
           <v-expansion-panel-content>
             <v-card-text class="px-4 grey--text">
               <div class="font-weight-bold">Due by {{ project.due }}</div>
-              <div>{{ project.content }}</div>
+              <div>{{ project.description }}</div>
             </v-card-text>
           </v-expansion-panel-content>
         </v-expansion-panel>

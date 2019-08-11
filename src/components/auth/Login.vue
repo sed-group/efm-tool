@@ -1,5 +1,8 @@
 <template>
     <div class="login container">
+        <v-layout align-center justify-center>
+            <v-img src="logo.png" aspect-ratio="1" max-width="128" max-height="128"></v-img>
+        </v-layout>
         <h2>Login</h2>
         <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field clearable v-model="email" label="E-mail" required></v-text-field>

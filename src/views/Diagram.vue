@@ -1,84 +1,154 @@
 <template>
   <div class="diagram">
+    <v-snackbar v-model="snackbarNode" :timeout="4000" top color="success">
+      <span>Awesome! You added a new node.</span>
+      <v-btn color="white" text @click="snackbarNode = false">Close</v-btn>
+    </v-snackbar>
     <h1 class="subtitle-1 grey--text">Diagram</h1>
-
     <v-container class="my-1 canvas">
     </v-container>
+    
+    <PopupNode @nodeAdded="snackbarNode = true" />
   </div>
 </template>
 
 <script>
 import * as d3 from 'd3'
+import db from '@/fb'
+import PopupNode from '@/components/PopupNode'
 
 export default {
   name: 'Diagram',
+  components: { 
+    PopupNode,
+  },
   data() {
     return {
+      snackbarNode: false,
     }
   },
   props: {
   },
   methods: {
     createSvg(){
-      // 2. Use the margin convention practice 
+
       var margin = {top: 50, right: 50, bottom: 50, left: 50}
-        , width = window.innerWidth - margin.left - margin.right
-        , height = window.innerHeight - margin.top - margin.bottom;
+        , width = window.innerWidth - margin.left - margin.right - 28
+        , height = window.innerHeight - margin.top - margin.bottom - 172;
 
-      // The number of datapoints
-      var n = 21;
+      const svg = d3.select('.canvas')
+        .append('svg')
+        .attr('width', width + 100)
+        .attr('height', height + 100);
 
-      // 5. X scale will use the index of our data
-      var xScale = d3.scaleLinear()
-          .domain([0, n-1]) // input
-          .range([0, width]); // output
+      const graph = svg.append('g')
+        .attr('transform', 'translate(50, 50)');
 
-      // 6. Y scale will use the randomly generate number 
-      var yScale = d3.scaleLinear()
-          .domain([0, 1]) // input 
-          .range([height, 0]); // output 
+      // tree and stratify
+      const stratify = d3.stratify()
+        .id(d => d.name)
+        .parentId(d => d.parent);
 
-      // 7. d3's line generator
-      var line = d3.line()
-          .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
-          .y(function(d) { return yScale(d.y); }) // set the y values for the line generator 
-          .curve(d3.curveMonotoneX) // apply smoothing to the line
+      const tree = d3.tree()
+        .size([width, height]);
 
-      // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-      var dataset = d3.range(n).map(function() { return {"y": d3.randomUniform(1)() } })
+      // create ordinal scale
+      const colour = d3.scaleOrdinal(['#FFC107', '#2196F3', '#000000', '#9E9E9E']);
 
-      // 1. Add the SVG to the page and employ #2
-      var svg = d3.select(".canvas").append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      // update function  
+      const update = (data) => {
 
-      // 3. Call the x axis in a group tag
-      svg.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0," + height + ")")
-          .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
+        // remove current nodes
+        graph.selectAll('.node').remove();
+        graph.selectAll('.link').remove();
 
-      // 4. Call the y axis in a group tag
-      svg.append("g")
-          .attr("class", "y axis")
-          .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+        // update ordinal scale domain
+        colour.domain(data.map(d => d.department));
 
-      // 9. Append the path, bind the data, and call the line generator 
-      svg.append("path")
-          .datum(dataset) // 10. Binds data to the line 
-          .attr("class", "line") // Assign a class for styling 
-          .attr("d", line); // 11. Calls the line generator 
+        // get updated root Node data
+        const rootNode = stratify(data);
+        const treeData = tree(rootNode).descendants();
+        
+        // get nodes selection and join data
+        const nodes = graph.selectAll('.node')
+          .data(treeData);
 
-      // 12. Appends a circle for each datapoint 
-      svg.selectAll(".dot")
-          .data(dataset)
-        .enter().append("circle") // Uses the enter().append() method
-          .attr("class", "dot") // Assign a class for styling
-          .attr("cx", function(d, i) { return xScale(i) })
-          .attr("cy", function(d) { return yScale(d.y) })
-          .attr("r", 5);
+        // get link selection and join new data
+        const link = graph.selectAll('.link')
+          .data(tree(rootNode).links());
+
+        // enter new links
+        link.enter()
+          .append('path')
+            .transition().duration(300)
+            .attr('class', 'link')
+            .attr('fill', 'none')
+            .attr('stroke', '#aaa') 
+            .attr('stroke-width', 2)
+            .attr('d', d3.linkVertical()
+              .x(d => d.x)
+              .y(d => d.y )
+            );
+
+        // create enter node groups
+        const enterNodes = nodes.enter()
+          .append('g')
+            .attr('class', 'node')
+            .attr('transform', d => `translate(${d.x}, ${d.y})`);
+            
+        // append rects to enter nodes
+        enterNodes.append('rect')
+          // apply the ordinal scale for fill
+          .attr('fill', d => colour(d.data.department))
+          .attr('stroke', '#555')
+          .attr('stroke-width', 2)
+          .attr('width', d => d.data.name.length * 10)
+          .attr('height', 50)
+          .attr('transform', (d) => { // (d,i,n)
+            let x = (d.data.name.length * 5);
+            return `translate(${-x}, -25)`
+          });
+
+        enterNodes.append('text')
+          .attr('text-anchor', 'middle')
+          .attr('dy', 5)
+          .attr('fill', 'white')
+          .text(d => d.data.name); 
+
+      };
+
+      // data & firebase hook-up
+      var data = [];
+
+      db.collection('employees').onSnapshot(res=> {
+
+        res.docChanges().forEach(change => {
+
+          const doc = {...change.doc.data(), id: change.doc.id};
+
+          switch (change.type) {
+            case 'added':
+              data.push(doc);
+              break;
+            case 'modified': {
+              const index = data.findIndex(item => item.id == doc.id);
+              data[index] = doc;
+              break;
+            }
+            case 'removed':
+              data = data.filter(item => item.id !== doc.id);
+              break;
+            default:
+              break;
+          }
+
+        });
+
+        update(data);
+
+      });
+
+
     }
   },
   mounted(){
@@ -89,18 +159,5 @@ export default {
 </script>
 
 <style>
-/* 13. Basic Styling with CSS */
 
-/* Style the lines by removing the fill and applying a stroke */
-.line {
-    fill: none;
-    stroke: #ffab00;
-    stroke-width: 3;
-}
-
-/* Style the dots by assigning a fill and stroke */
-.dot {
-    fill: #ffab00;
-    stroke: #fff;
-}
 </style>

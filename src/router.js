@@ -7,6 +7,7 @@ import Diagram from './views/Diagram.vue'
 import Signup from './components/auth/Signup.vue'
 import Login from './components/auth/Login.vue'
 import ViewProfile from './components/profile/ViewProfile.vue'
+import ViewProject from './components/project/ViewProject.vue'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -34,12 +35,18 @@ const router = new Router({
     {
       path: '/team',
       name: 'team',
-      component: Team
+      component: Team,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/diagram',
       name: 'diagram',
-      component: Diagram
+      component: Diagram,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/signup',
@@ -55,6 +62,14 @@ const router = new Router({
       path: '/profile/:id',
       name: 'ViewProfile',
       component: ViewProfile,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/project/:id',
+      name: 'ViewProject',
+      component: ViewProject,
       meta: {
         requiresAuth: true
       }
