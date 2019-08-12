@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Dashboard from './views/Dashboard.vue'
 import Projects from './views/Projects.vue'
 import Team from './views/Team.vue'
-import Diagram from './views/Diagram.vue'
 import Signup from './components/auth/Signup.vue'
 import Login from './components/auth/Login.vue'
 import ViewProfile from './components/profile/ViewProfile.vue'
@@ -36,14 +35,6 @@ const router = new Router({
       path: '/team',
       name: 'team',
       component: Team,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/diagram',
-      name: 'diagram',
-      component: Diagram,
       meta: {
         requiresAuth: true
       }

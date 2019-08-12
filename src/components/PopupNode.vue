@@ -31,9 +31,9 @@
       <v-card-text>
         <v-form class="px-3" ref="form">
           <v-text-field v-model="name" label="Name" prepend-icon="folder" :rules="inputRules"></v-text-field>
-          <v-text-field v-model="parent" label="Parent" prepend-icon="mdi-crown" :rules="inputRules"></v-text-field>
+          <v-text-field v-model="parent" label="Parent" prepend-icon="mdi-crown"></v-text-field>
           <v-select v-model="type" label="Type" prepend-icon="mdi-format-list-bulleted-type" :items="nodeTypes" :hint="`${type}`" item-text="nodeType" item-value="abbr" :rules="inputRules"></v-select>
-          <v-textarea v-model="description" label="Description" prepend-icon="edit" :rules="inputRules"></v-textarea>
+          <v-textarea v-model="description" label="Description" prepend-icon="edit"></v-textarea>
 
           <v-spacer></v-spacer>
 
@@ -83,6 +83,7 @@ export default {
           type: this.type,
           parent: this.parent,
           creator: this.user.id,
+          project: this.$route.params.id,
         }
         db.collection('nodes').add(node).then(() => {
           this.loading = false

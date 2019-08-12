@@ -6,8 +6,8 @@
       <v-img
         class="mx-2"
         src="/logo.png"
-        max-height="40"
-        max-width="40"
+        max-height="24"
+        max-width="24"
         contain
       ></v-img>
       <v-toolbar-title class="text-uppercase grey--text">
@@ -15,21 +15,6 @@
         <span class="font-weight-light">TOOL</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <!-- dropdown menu -->
-<!--       <v-menu offset-y>
-        <template v-slot:activator="{ on }">
-          <v-btn text v-on="on" color="grey">
-            <v-icon left>expand_more</v-icon>
-            <span>Menu</span>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
-            <v-list-item-title>{{ link.text }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu> -->
 
       <v-btn v-if="!user" text color="grey" :to="{ path: '/signup'}" append>
         <span>Sign Up</span>
@@ -54,6 +39,7 @@
           <p class="white--text subheading mt-1">{{ this.name }}</p>
         </v-flex>
       </v-layout>
+
       <v-list>
         <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
           <v-list-item-action>
@@ -63,7 +49,24 @@
             <v-list-item-title class="white--text">{{ link.text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+<!--         <v-list-group class="white--text" v-for="item in items" :key="item.title" v-model="item.active" :prepend-icon="item.action"
+            no-action>
+            <template v-slot:activator>
+                <v-list-item-content>
+                    <v-list-item-title class="white--text" v-text="item.title"></v-list-item-title>
+                </v-list-item-content>
+            </template>
+
+            <v-list-item v-for="subItem in item.items" :key="subItem.title" @click="">
+                <v-list-item-content>
+                    <v-list-item-title class="white--text" v-text="subItem.title"></v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list-group> -->
+
       </v-list>
+
       <template v-slot:append>
         <div class="text-center">
 
@@ -170,6 +173,18 @@ export default {
       links: [],
       dialogPrivacy: false,
       dialogTerms: false,
+      items: [
+        {
+          action: 'mdi-clipboard-text-outline',
+          title: 'Projects',
+          active: false,
+          items: [
+            { title: 'Project 1' },
+            { title: 'Project 2' },
+            { title: 'Project 3' },
+          ],
+        },
+      ],
     }
   },
   methods: {
@@ -205,7 +220,6 @@ export default {
         { icon: 'dashboard', text: 'Dashboard', route: '/' },
         // { icon: 'folder', text: 'My Projects', route: '/projects' },
         // { icon: 'person', text: 'Team', route: '/team' },
-        { icon: 'poll', text: 'Diagram', route: '/diagram' },
       ]
     })
   }
