@@ -3,51 +3,31 @@
 
     <h1 class="subtitle-1 grey--text">Project: {{ project.title }}</h1>
 
-    <v-tabs v-model="tab" background-color="transparent">
-      <v-tab v-for="item in items" :key="item" class="grey lighten-5">
-        {{ item }}
-      </v-tab>
-    </v-tabs>
+    <v-card class="px-3 elevation-0 grey lighten-5" text>
+      <v-layout row wrap class="pa-3">
+        <v-flex xs12 md6>
+          <div class="caption grey--text">Title</div>
+          <div>{{ project.title }}</div>
+        </v-flex>
+        <v-flex xs12 md6>
+          <div class="caption grey--text">Description</div>
+          <div>{{ project.description }}</div>
+        </v-flex>
+        <v-flex xs12 md6>
+          <div class="caption grey--text">Person</div>
+          <div>{{ project.person }}</div>
+        </v-flex>
+        <v-flex xs12 md6>
+          <div class="caption grey--text">Status</div>
+          <div>{{ project.status }}</div>
+        </v-flex>
+      </v-layout>
+      <v-divider></v-divider>
+    </v-card>
 
-    <v-tabs-items v-model="tab">
-
-      <v-tab-item item="Overview">
-      <v-card class="px-3 elevation-0 grey lighten-5" text>
-        <v-layout row wrap class="pa-3">
-          <v-flex xs12 md6>
-            <div class="caption grey--text">Title</div>
-            <div>{{ project.title }}</div>
-          </v-flex>
-          <v-flex xs12 md6>
-            <div class="caption grey--text">Description</div>
-            <div>{{ project.description }}</div>
-          </v-flex>
-          <v-flex xs12 md6>
-            <div class="caption grey--text">Person</div>
-            <div>{{ project.person }}</div>
-          </v-flex>
-          <v-flex xs12 md6>
-            <div class="caption grey--text">Status</div>
-            <div>{{ project.status }}</div>
-          </v-flex>
-        </v-layout>
-        <v-divider></v-divider>
-      </v-card>
-      </v-tab-item>
-
-      <v-tab-item item="Elements">
-      <v-card class="px-3 elevation-0 grey lighten-5" text>
-        Nodes and links
-      </v-card>
-      </v-tab-item>
-
-      <v-tab-item item="Diagram">
-      <v-card class="px-3 elevation-0 grey lighten-5" text>
-        <ViewDiagram />
-      </v-card>
-      </v-tab-item>
-
-    </v-tabs-items>
+    <v-card class="px-3 elevation-0 grey lighten-5" text>
+      <ViewDiagram />
+    </v-card>
 
   </div>
 </template>
