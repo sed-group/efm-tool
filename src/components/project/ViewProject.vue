@@ -1,29 +1,34 @@
 <template>
   <div class="view-project">
-
-    <h1 class="subtitle-1 grey--text">Project: {{ project.title }}</h1>
-
-    <v-card class="px-3 elevation-0 grey lighten-5" text>
-      <v-layout row wrap class="pa-3">
-        <v-flex xs12 md6>
-          <div class="caption grey--text">Title</div>
-          <div>{{ project.title }}</div>
-        </v-flex>
-        <v-flex xs12 md6>
-          <div class="caption grey--text">Description</div>
-          <div>{{ project.description }}</div>
-        </v-flex>
-        <v-flex xs12 md6>
-          <div class="caption grey--text">Person</div>
-          <div>{{ project.person }}</div>
-        </v-flex>
-        <v-flex xs12 md6>
-          <div class="caption grey--text">Status</div>
-          <div>{{ project.status }}</div>
-        </v-flex>
-      </v-layout>
-      <v-divider></v-divider>
-    </v-card>
+    <v-expansion-panels>
+      <v-expansion-panel>
+        <v-expansion-panel-header>Project: {{ project.title }}</v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-card class="px-3 elevation-0 grey lighten-5" text>
+            <v-layout row wrap class="pa-3">
+              <v-flex xs12 md4>
+                <div class="caption grey--text">Title</div>
+                <div>{{ project.title }}</div>
+              </v-flex>
+              <v-flex xs12 md4>
+                <div class="caption grey--text">Person</div>
+                <div>{{ project.person }}</div>
+              </v-flex>
+              <v-flex xs12 md4>
+                <div class="caption grey--text">Status</div>
+                <div>{{ project.status }}</div>
+              </v-flex>
+              <v-flex xs12 md6>
+                <div class="caption grey--text">Description</div>
+                <div>{{ project.description }}</div>
+              </v-flex>
+            </v-layout>
+            <v-divider></v-divider>
+          </v-card>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+    
 
     <v-card class="px-3 elevation-0 grey lighten-5" text>
       <ViewDiagram />

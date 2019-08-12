@@ -271,10 +271,10 @@ export default {
           //.attr('fill', d => colour(d.data.type))
           .attr('stroke', '#555')
           .attr('stroke-width', 2)
-          .attr('width', d => d.data.name.length * 10)
+          .attr('width', d => d.data.name.length * 10 + 10)
           .attr('height', 50)
           .attr('transform', (d) => { // (d,i,n)
-            let x = (d.data.name.length * 5);
+            let x = (d.data.name.length * 5 + 5);
             return `translate(${-x}, -25)`
           });
 

@@ -140,18 +140,13 @@
 
 
 
-    <v-bottom-sheet v-model="betaNotice" persistent>
-      <v-sheet class="text-center" height="250px">
-        <div class="py-3"><p class="title"><v-icon color="red">mdi-alert</v-icon> Warning <v-icon color="red">mdi-alert</v-icon></p></div>
-        <div class="py-3">This site is under development, it will eat your homework.</div>
-        <div class="py-3">Also, there might be cookies involved in its operation. You can't eat them though.</div>
-        <v-btn
-          class="mt-6"
-          color="error"
-          @click="betaNotice = !betaNotice"
-        >Acknowledge</v-btn>
-      </v-sheet>
-    </v-bottom-sheet>
+    <v-dialog v-model="betaNotice">
+      <v-card class="text-center" color="error" dark>
+        <v-card-title class="text-center">Warning</v-card-title>
+        <v-card-text>This site is under development, it will eat your homework. Also, there might be cookies involved in its operation. You can't eat them though.</v-card-text>
+        <v-card-text><v-btn outlined color="white" class="" @click="betaNotice = !betaNotice">Acknowledge</v-btn></v-card-text>
+      </v-card>
+    </v-dialog>
 
   </nav>
 </template>
