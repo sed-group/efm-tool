@@ -1,4 +1,5 @@
 # efm-tool
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3f9dc05c-198a-4632-a91c-4950c67a2290/deploy-status)](https://app.netlify.com/sites/efm-tool/deploys)
 
 ## Project setup
 ```
