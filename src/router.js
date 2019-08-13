@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Home from './views/Home.vue'
 import Dashboard from './views/Dashboard.vue'
 import Projects from './views/Projects.vue'
 import Team from './views/Team.vue'
@@ -17,6 +18,14 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      name: 'Home',
+      component: Home,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
       meta: {

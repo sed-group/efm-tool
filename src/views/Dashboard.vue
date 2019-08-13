@@ -44,28 +44,28 @@
       
       <template v-for="project in myProjects">
         <v-hover v-slot:default="{ hover }" :key="project.title">
-      <v-card class="px-3 elevation-0" :class="{ 'on-hover': hover }" text :style="{ cursor: 'pointer'}">
-        <v-layout row wrap :class="`pa-3 project ${project.status}`" @click="goToProject(project.id)">
-          <v-flex xs12 md3>
-            <div class="caption grey--text">Project title</div>
-            <div>{{ project.title }}</div>
-          </v-flex>
-          <v-flex xs12 md5>
-            <div class="caption grey--text">Description</div>
-            <div>{{ project.description }}</div>
-          </v-flex>
-          <v-flex xs6 md2>
-            <div class="caption grey--text">Person</div>
-            <div>{{ project.person }}</div>
-          </v-flex>
-          <v-flex xs6 md2>
-            <div class="text-end">
-              <v-chip small :class="`${project.status} white--text my-2 caption`">{{ project.status }}</v-chip>
-            </div>
-          </v-flex>
-        </v-layout>
-        <v-divider></v-divider>
-      </v-card>
+          <v-card class="px-3 elevation-0" :class="{ 'on-hover': hover }" text :style="{ cursor: 'pointer'}">
+            <v-layout row wrap :class="`pa-3 project ${project.status}`" @click="goToProject(project.id)">
+              <v-flex xs12 md3>
+                <div class="caption grey--text">Project title</div>
+                <div>{{ project.title }}</div>
+              </v-flex>
+              <v-flex xs12 md5>
+                <div class="caption grey--text">Description</div>
+                <div>{{ project.description }}</div>
+              </v-flex>
+              <v-flex xs6 md2>
+                <div class="caption grey--text">Person</div>
+                <div>{{ project.person }}</div>
+              </v-flex>
+              <v-flex xs6 md2>
+                <div class="text-end">
+                  <v-chip small :class="`${project.status} white--text my-2 caption`">{{ project.status }}</v-chip>
+                </div>
+              </v-flex>
+            </v-layout>
+            <v-divider></v-divider>
+          </v-card>
         </v-hover>
       </template>
 
@@ -150,10 +150,10 @@ export default {
 
 <style scoped>
 .v-card {
-  transition: opacity .4s ease-in-out;
+  transition: background-color .4s ease-in-out;
 }
-.v-card:not(.on-hover) {
-  opacity: 0.5;
+.v-card.on-hover {
+  background-color: #FFF8E1;
  }
 
 .project.complete{

@@ -185,7 +185,7 @@ export default {
   methods: {
     logout(){
       firebase.auth().signOut().then(() => {
-        this.$router.push({ name: 'Login' })
+        this.$router.push({ name: 'Home' })
       })
     },
   },
@@ -212,7 +212,7 @@ export default {
       });
       this.links = [
         { icon: 'mdi-account-circle', text: 'Profile', route: '/profile/'+this.id },
-        { icon: 'dashboard', text: 'Dashboard', route: '/' },
+        { icon: 'dashboard', text: 'Dashboard', route: '/dashboard' },
         // { icon: 'folder', text: 'My Projects', route: '/projects' },
         // { icon: 'person', text: 'Team', route: '/team' },
       ]
