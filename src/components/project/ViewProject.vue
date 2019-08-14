@@ -39,6 +39,14 @@
                                 >
                                   Discard changes
                                 </v-btn>
+                                
+                                <v-btn
+                                  color="error"
+                                  class="mr-4"
+                                  @click="deleteProject()"
+                                >
+                                  Delete project
+                                </v-btn>
                               </v-flex>
                             </v-col>
                         </v-row>
@@ -59,12 +67,18 @@
       <v-btn color="white" text @click="snackbarUpdatedProject = false">Close</v-btn>
     </v-snackbar>
 
+    <v-snackbar v-model="snackbarDeletedProject" :timeout="4000" top color="success">
+      <span>Awesome! You deleted the project.</span>
+      <v-btn color="white" text @click="snackbarDeletedProject = false">Close</v-btn>
+    </v-snackbar>
+
   </div>
 </template>
 
 <script>
 import ViewDiagram from '@/components/project/ViewDiagram'
 import db from '@/fb'
+import router from '@/router'
 
 export default {
   name: 'ViewProject',
@@ -84,9 +98,35 @@ export default {
       },
       loadingProject: false,
       snackbarUpdatedProject: false,
+      snackbarDeletedProject: false,
     }
   },
   methods: {
+    deleteProject(){
+      db.collection('projects').doc(this.$route.params.id).delete().then(() => {
+        this.snackbarDeletedProject = true;
+        //delete all the nodes related to the project
+        db.collection('nodes').where('project', '==', this.$route.params.id)
+          .get()
+          .then(function(querySnapshot) {
+            // Once we get the results, begin a batch
+            var batch = db.batch();
+            querySnapshot.forEach(function(doc) {
+              // For each doc, add a delete operation to the batch
+              batch.delete(doc.ref);
+            });
+
+            // Commit the batch
+            return batch.commit();
+          })
+          .then(function() {
+            router.push('/dashboard');
+          });
+      })
+      .catch(function(error) {
+          console.error("Error deleting project: ", error);
+      });
+    },
     discardProjectChanges(){
       this.selectedProject.title = this.originalProject.title;
       this.selectedProject.status = this.originalProject.status;
