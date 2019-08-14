@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="home">
-    <v-row justify="center"class="elevation-0 display-3">
+    <v-row justify="center" class="elevation-0 display-3">
       <v-col cols="10">
         <v-row
           align="center"
