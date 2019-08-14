@@ -10,6 +10,10 @@
             <div>{{ profile.name }}</div>
           </v-flex>
           <v-flex xs12 md6>
+            <div class="caption grey--text">Email</div>
+            <div>{{ profile.email }}</div>
+          </v-flex>
+          <v-flex xs12 md6>
             <div class="caption grey--text">User ID</div>
             <div>{{ profile.user_id }}</div>
           </v-flex>

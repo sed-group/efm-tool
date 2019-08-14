@@ -8,6 +8,7 @@ import Signup from './components/auth/Signup.vue'
 import Login from './components/auth/Login.vue'
 import ViewProfile from './components/profile/ViewProfile.vue'
 import ViewProject from './components/project/ViewProject.vue'
+import Docs from './components/documentation/Docs.vue'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -72,6 +73,14 @@ const router = new Router({
       component: ViewProject,
       meta: {
         requiresAuth: true
+      }
+    },
+    {
+      path: '/docs',
+      name: 'Docs',
+      component: Docs,
+      meta: {
+        requiresAuth: false
       }
     }
 

@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="home">
-    <v-row justify="center"class="elevation-0 grey lighten-5 display-3">
-      <v-col cols="4">
+    <v-row justify="center"class="elevation-0 display-3">
+      <v-col cols="10">
         <v-row
           align="center"
           justify="start"
@@ -11,16 +11,10 @@
           EFM Tool helps product design teams succeed
         </v-row>
         <v-row>
-          <v-btn router to="Signup" color="success" dark large rounded>Get started</v-btn>
-        </v-row>
-      </v-col>
-      <v-col cols="2">
-        <v-row
-          align="center"
-          justify="center"
-          style="min-height: 300px;"
-        >
-            <v-img src="logo.png" aspect-ratio="1" max-width="128" max-height="128"></v-img>
+          <v-btn class="ma-2" router to="Signup" color="success" dark large rounded>Get started</v-btn>
+          <v-btn class="ma-2" router to="docs" color="primary" dark large rounded text>
+            <v-icon left>mdi-information</v-icon> Learn more
+          </v-btn>
         </v-row>
       </v-col>
     </v-row>
@@ -48,6 +42,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+main {
+  background: url("/background.jpg") fixed 10% 10%;
+}
 </style>

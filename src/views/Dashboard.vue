@@ -153,7 +153,7 @@ export default {
   transition: background-color .4s ease-in-out;
 }
 .v-card.on-hover {
-  background-color: #FFF8E1;
+  background-color: #F5F5F5;
  }
 
 .project.complete{

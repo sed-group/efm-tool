@@ -1,114 +1,107 @@
 <template>
   <div class="diagram">
-    <v-snackbar v-model="snackbarNode" :timeout="4000" top color="success">
+
+    <v-container py-0>
+      <v-row>
+        <v-col xs="6" sm="8" lg="9" xl="10">
+          <v-card class="px-3">
+            <div class="canvas">
+            </div>
+            <PopupNode :selected="{selected: selected, type: selectedNode.type, name: selectedNode.name}" @nodeAdded="snackbarNewNode = true" />
+          </v-card>
+        </v-col>
+        <v-col xs="6" sm="4" lg="3" xl="2">
+          <v-card v-if="selected">
+            <v-card-title class="title white--text" v-bind:class="[selectedNode.type]">{{ nodeTypes.filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}</v-card-title>
+              <v-form>
+                <v-container grid-list-xl>
+                  <v-layout wrap>
+                    <v-flex xs12>
+                      <v-text-field
+                        v-model.lazy="selectedNode.name"
+                        label="Name"
+                        required
+                        outlined
+                      ></v-text-field>
+                      <v-text-field
+                        v-model.lazy="selectedNode.parent"
+                        label="Parent"
+                        required
+                        outlined
+                      ></v-text-field>
+                      <v-textarea
+                        v-model.lazy="selectedNode.description"
+                        label="Description"
+                        outlined
+                      ></v-textarea>
+                    </v-flex>
+
+                    <v-flex xs12>
+                      <v-btn
+                        color="success"
+                        class="mr-4"
+                        block
+                        @click="saveNodeChanges()"
+                        :loading="loadingNode"
+                      >
+                        Save changes
+                      </v-btn>
+                    </v-flex>
+
+                    <v-flex xs12>
+                      <v-btn
+                        color="warning"
+                        class="mr-4"
+                        block
+                        @click="discardNodeChanges()"
+                        :loading="loadingNode"
+                      >
+                        Discard changes
+                      </v-btn>
+                    </v-flex>
+
+                    <v-flex xs12>
+                      <v-btn
+                        color="error"
+                        class="mr-4"
+                        block
+                        @click="deleteNode()"
+                      >
+                        Delete node and children
+                      </v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-form>
+
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+    
+    <v-snackbar v-model="snackbarNewNode" :timeout="4000" top color="success">
       <span>Awesome! You added a new node.</span>
-      <v-btn color="white" text @click="snackbarNode = false">Close</v-btn>
+      <v-btn color="white" text @click="snackbarNewNode = false">Close</v-btn>
     </v-snackbar>
-    
-
-    <v-navigation-drawer permanent floating absolute right v-if="propertiesDrawer">
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="title">
-            Properties
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            of the selected node
-          </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-list dense nav>
-        
-        <v-form>
-          <v-container grid-list-xl>
-            <v-layout wrap>
-              <v-flex xs12>
-                <v-text-field
-                  v-model="selectedNode.name"
-                  label="Name"
-                  required
-                ></v-text-field>
-              </v-flex>
-
-              <v-flex xs12>
-                <v-text-field
-                  v-model="selectedNode.type"
-                  :counter="10"
-                  label="Type"
-                  required
-                ></v-text-field>
-              </v-flex>
-
-              <v-flex xs12>
-                <v-text-field
-                  v-model="selectedNode.parent"
-                  label="Parent"
-                  required
-                ></v-text-field>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-form>
-
-      </v-list>
-    </v-navigation-drawer>
-
-            <v-container class="my-1 canvas">
-
-            </v-container>
-
-        <!-- <v-layout row wrap>
-          <v-flex xs12 md6>
-
-          </v-flex>
-          <v-flex xs12 md6>
-            <v-form>
-              <v-container grid-list-xl>
-                <v-layout wrap>
-                  <v-flex xs12>
-                    <v-text-field
-                      v-model="selectedNode.name"
-                      label="Name"
-                      required
-                    ></v-text-field>
-                  </v-flex>
-
-                  <v-flex xs12>
-                    <v-text-field
-                      v-model="selectedNode.type"
-                      :counter="10"
-                      label="Type"
-                      required
-                    ></v-text-field>
-                  </v-flex>
-
-                  <v-flex xs12>
-                    <v-text-field
-                      v-model="selectedNode.parent"
-                      label="Parent"
-                      required
-                    ></v-text-field>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-form>
-            
-          </v-flex>
-        </v-layout> -->
+    <v-snackbar v-model="snackbarUpdatedNode" :timeout="4000" top color="success">
+      <span>Awesome! You updated the node.</span>
+      <v-btn color="white" text @click="snackbarUpdatedNode = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarDeletedtedNode" :timeout="4000" top color="success">
+      <span>Awesome! You deleted the node.</span>
+      <v-btn color="white" text @click="snackbarDeletedNode = false">Close</v-btn>
+    </v-snackbar>
 
 
-    
-    <PopupNode @nodeAdded="snackbarNode = true" />
   </div>
 </template>
 
 <script>
 import * as d3 from 'd3'
 import db from '@/fb'
+import firebase from 'firebase'
 import PopupNode from '@/components/PopupNode'
+import { appendFile } from 'fs';
 
 export default {
   name: 'ViewDiagram',
@@ -117,19 +110,75 @@ export default {
   },
   data() {
     return {
-      snackbarNode: false,
+      user: null,
+      snackbarNewNode: false,
+      snackbarUpdatedNode: false,
+      selected: false,
+      nodeTypes: [
+        {nodeType: 'Functional Requirement', abbr: 'FR'}, 
+        {nodeType: 'Design Solution', abbr: 'DS'}, 
+        {nodeType: 'Constraint', abbr: 'C'}
+      ],
       selectedNode: {
+        id: '',
         name: '',
         type: '',
         parent: '',
         description: '',
       },
-      propertiesDrawer: false,
+      nodeChanged: false,
+      originalNode: {
+        id: '',
+        name: '',
+        type: '',
+        parent: '',
+        description: '',
+      },
+      loadingNode: false,
     }
   },
   props: {
   },
   methods: {
+    deleteNode() {
+      db.collection('nodes').doc(this.selectedNode.id).delete().then(() => {
+        this.snackbarDeletedNode = true;
+      })
+      .catch(function(error) {
+          console.error("Error writing document: ", error);
+      });
+    },
+    discardNodeChanges(){
+      this.selectedNode.name = this.originalNode.name;
+      this.selectedNode.parent = this.originalNode.parent; // watch out for this when we do the children
+      this.selectedNode.description= this.originalNode.description;
+    },
+    saveNodeChanges(){
+      if (JSON.stringify(this.selectedNode) == JSON.stringify(this.originalNode)) {
+        console.log('Nothing changed!')
+      } else {
+        console.log('Something changed')
+        // save to db
+        if(true) {
+          this.loadingNode = true
+          const node = { 
+            name: this.selectedNode.name,
+            description: this.selectedNode.description,
+            type: this.selectedNode.type,
+            parent: this.selectedNode.parent,
+            creator: this.user.id,
+            project: this.$route.params.id,
+          }
+          db.collection('nodes').doc(this.selectedNode.id).set(node).then(() => {
+            this.loadingNode = false
+            this.snackbarUpdatedNode = true;
+          })
+          .catch(function(error) {
+              console.error("Error writing document: ", error);
+          });
+        }
+      }
+    },
     createSvg(){
 
       let vueComponent = this;
@@ -141,7 +190,10 @@ export default {
       const svg = d3.select('.canvas')
         .append('svg')
         .attr('width', width + 100)
-        .attr('height', height + 100);
+        .attr('height', height + 100)
+        .call(d3.zoom().on("zoom", function () {
+                svg.attr("transform", d3.event.transform)
+        }));
 
       const graph = svg.append('g')
         .attr('transform', 'translate(50, 50)');
@@ -190,7 +242,7 @@ export default {
             .transition().duration(300)
             .attr('fill', 'none')
             .attr('stroke', '#aaa') 
-            .attr('stroke-width', 2)
+            .attr('stroke-width', 1)
             .attr('d', d3.linkVertical()
               .x(d => d.x)
               .y(d => d.y )
@@ -234,8 +286,16 @@ export default {
             .on("click", function(d){
               let node = d3.select(this).select('rect')
               if (!node.classed("selected") ){
-                vueComponent.propertiesDrawer = true;
+                vueComponent.selected = true;
+                vueComponent.originalNode = {
+                  id: d.data.id,
+                  name: d.data.name,
+                  type: d.data.type,
+                  parent: d.data.parent,
+                  description: d.data.description,
+                }
                 vueComponent.selectedNode = {
+                  id: d.data.id,
                   name: d.data.name,
                   type: d.data.type,
                   parent: d.data.parent,
@@ -244,14 +304,14 @@ export default {
                 d3.selectAll('rect')
                   .classed("selected", false)
                   .attr("stroke","#555")
-                  .attr('stroke-width', 2);
+                  .attr('stroke-width', 1);
                 node.classed("selected", true)
                 node.transition()
                   .attr("stroke","red")
-                  .attr('stroke-width', 4);
+                  .attr('stroke-width', 2);
               }else{
                 node.classed("selected", false);
-                vueComponent.propertiesDrawer = false;
+                vueComponent.selected = false;
                 vueComponent.selectedNode = {
                   name: '',
                   type: '',
@@ -260,7 +320,7 @@ export default {
                 }
                 node.transition()
                   .attr("stroke","#555")
-                  .attr('stroke-width', 2);
+                  .attr('stroke-width', 1);
               }            
             });
             
@@ -270,7 +330,7 @@ export default {
           // apply the ordinal scale for fill
           //.attr('fill', d => colour(d.data.type))
           .attr('stroke', '#555')
-          .attr('stroke-width', 2)
+          .attr('stroke-width', 1)
           .attr('width', d => d.data.name.length * 10 + 10)
           .attr('height', 50)
           .attr('transform', (d) => { // (d,i,n)
@@ -283,6 +343,19 @@ export default {
           .attr('dy', 5)
           .attr('fill', 'white')
           .text(d => d.data.name); 
+
+// svg.append("rect")
+//     .attr("fill", "none")
+//     .attr("pointer-events", "all")
+//     .attr("width", width)
+//     .attr("height", height)
+//     .call(d3.zoom()
+//         .scaleExtent([1, 8])
+//         .on("zoom", zoom));
+
+// function zoom() {
+//   graph.attr("transform", d3.event.transform);
+// }
 
       };
 
@@ -322,22 +395,66 @@ export default {
   },
   mounted(){
     this.createSvg();
+  },
+  created(){
+    let ref = db.collection('users')
+
+    //get current user
+    ref.where('user_id', '==', firebase.auth().currentUser.uid).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          this.user = doc.data();
+          this.user.id = doc.id;
+        })
+      })
   }
 };
 
 </script>
 
 <style>
-.FR {
+.DS.selected {
+  stroke-dasharray: 6;
+  stroke: #FF6F00;
+  stroke-linecap: round;
+}
+.FR.selected {
+  stroke-dasharray: 6;
+  stroke: #0D47A1;
+  stroke-linecap: round;
+}
+.C.selected {
+  stroke-dasharray: 6;
+  stroke: #424242;
+  stroke-linecap: round;
+}
+.CC.selected {
+  stroke-dasharray: 6;
+  stroke: #757575;
+  stroke-linecap: round;
+}
+rect.FR {
   fill: #2196F3;
 }
-.DS {
+rect.DS {
   fill: #FFC107;
 }
-.C {
+rect.C {
   fill: #000000;
 }
-.CC {
+rect.CC {
   fill: #9E9E9E;
+}
+.v-card__title.FR {
+  background-color: #2196F3;
+}
+.v-card__title.DS {
+  background-color: #FFC107;
+}
+.v-card__title.C {
+  background-color: #000000;
+}
+.v-card__title.CC {
+  background-color: #9E9E9E;
 }
 </style>

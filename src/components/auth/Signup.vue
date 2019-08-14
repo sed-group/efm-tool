@@ -1,8 +1,5 @@
 <template>
     <div class="signup container">
-        <v-layout align-center justify-center>
-            <v-img src="logo.png" aspect-ratio="1" max-width="128" max-height="128"></v-img>
-        </v-layout>
         <h2>Create an account</h2>
         <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field clearable v-model="name" :rules="nameRules" label="Name" required></v-text-field>

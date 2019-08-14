@@ -3,19 +3,24 @@
 
     <v-app-bar text app class="elevation-0 grey lighten-5">
       <v-app-bar-nav-icon v-if="user" @click="drawer = !drawer" class="grey--text"></v-app-bar-nav-icon>
-      <v-img
-        class="mx-2"
-        src="/logo.png"
-        max-height="24"
-        max-width="24"
-        contain
-      ></v-img>
-      <v-toolbar-title class="text-uppercase grey--text">
-        <span>E-FM</span>
-        <span class="font-weight-light">TOOL</span>
+      <router-link :to="{ name: 'Home' }">
+        <v-img
+          class="mx-2"
+          src="/logo.png"
+          max-height="24"
+          max-width="24"
+          contain
+        ></v-img>
+      </router-link>
+      <v-toolbar-title class="toolbar-title text-uppercase">
+        <router-link :to="{ name: 'Home' }">
+          <span class="grey--text">E-FM</span>
+          <span class="grey--text font-weight-light">TOOL</span>
+        </router-link>
       </v-toolbar-title>
+      
       <v-spacer></v-spacer>
-
+      
       <v-btn v-if="!user" text color="grey" :to="{ path: '/signup'}" append>
         <span>Sign Up</span>
         <v-icon right>mdi-account-plus</v-icon>
@@ -69,6 +74,61 @@
 
       <template v-slot:append>
         <div class="text-center">
+                    
+          <v-dialog v-model="dialogTerms" width="500">
+              <template v-slot:activator="{ on }">        
+                    <v-chip class="ma-2" pill v-on="on">
+                      <v-icon left>mdi-file-document-box-check-outline</v-icon>
+                      Terms
+                    </v-chip>
+              </template>
+
+              <v-card>
+                  <v-card-title class="headline grey lighten-2" primary-title>
+                      Terms
+                  </v-card-title>
+
+                  <v-card-text>
+                    <p></p>
+                    <p>Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern our relationship with you in relation to this website. If you disagree with any part of these terms and conditions, please do not use our website.</p>
+                    <p>The term 'EFM Tool' or 'us' or 'we' refers to the owner of the website. The term 'you' refers to the user or viewer of our website.</p>
+                    <p>The use of this website is subject to the following terms of use:</p>
+                    <ul>
+                      <li>
+                        Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.
+                      </li>
+                      <li>
+                        Your use of any information or materials on this website is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services or information available through this website meet your specific requirements.
+                      </li>
+                      <li>
+                        This website contains material which is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions.
+                      </li>
+                      <li>
+                        All trade marks reproduced in this website which are not the property of, or licensed to, the operator are acknowledged on the website.
+                      </li>
+                      <li>
+                        Unauthorised use of this website may give rise to a claim for damages and/or be a criminal offence.
+                      </li>
+                      <li>
+                        From time to time this website may also include links to other websites. These links are provided for your convenience to provide further information. They do not signify that we endorse the website(s). We have no responsibility for the content of the linked website(s).
+                      </li>
+                      <li>
+                        Your use of this website and any dispute arising out of such use of the website is subject to the laws of Sweden.
+                      </li>
+                    </ul>
+
+                  </v-card-text>
+
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="primary" text @click="dialogTerms = false">
+                          Accept
+                      </v-btn>
+                  </v-card-actions>
+              </v-card>
+          </v-dialog>
 
           <v-dialog v-model="dialogPrivacy" width="500">
               <template v-slot:activator="{ on }">        
@@ -84,11 +144,7 @@
                   </v-card-title>
 
                   <v-card-text>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                      anim id est laborum.
+                    The EU General Data Protection Regulation (GDPR) applies when having different users, so this will be updated accordingly soon. So far, we only store your name and email if you sign up for an account.
                   </v-card-text>
 
                   <v-divider></v-divider>
@@ -96,39 +152,7 @@
                   <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn color="primary" text @click="dialogPrivacy = false">
-                          Sounds fair
-                      </v-btn>
-                  </v-card-actions>
-              </v-card>
-          </v-dialog>
-                    
-          <v-dialog v-model="dialogTerms" width="500">
-              <template v-slot:activator="{ on }">        
-                    <v-chip class="ma-2" pill v-on="on">
-                      <v-icon left>mdi-file-document-box-check-outline</v-icon>
-                      Terms & Conditions
-                    </v-chip>
-              </template>
-
-              <v-card>
-                  <v-card-title class="headline grey lighten-2" primary-title>
-                      Terms & Conditions
-                  </v-card-title>
-
-                  <v-card-text>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                      anim id est laborum.
-                  </v-card-text>
-
-                  <v-divider></v-divider>
-
-                  <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="primary" text @click="dialogTerms = false">
-                          Sounds fair
+                          Accept
                       </v-btn>
                   </v-card-actions>
               </v-card>
@@ -222,5 +246,7 @@ export default {
 </script>
 
 <style>
-
+.toolbar-title a {
+  text-decoration: none;
+}
 </style>
