@@ -161,7 +161,10 @@ export default {
     let ref = db.collection('projects')
     ref.doc(this.$route.params.id).get()
     .then(project => {
-      this.project = project.data()
+      this.project = project.data();
+      if (!project.exists) {
+        router.push('/dashboard');
+      }
     })
   }
 }
