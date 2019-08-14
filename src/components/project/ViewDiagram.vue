@@ -39,35 +39,29 @@
                     <v-flex xs12>
                       <v-btn
                         color="success"
-                        class="mr-4"
-                        block
+                        class="mr-2"
                         @click="saveNodeChanges()"
                         :loading="loadingNode"
+                        small
                       >
-                        Save changes
+                        Save
                       </v-btn>
-                    </v-flex>
-
-                    <v-flex xs12>
                       <v-btn
                         color="warning"
-                        class="mr-4"
-                        block
+                        class="mr-2"
                         @click="discardNodeChanges()"
                         :loading="loadingNode"
+                        small
                       >
-                        Discard changes
+                        Reset
                       </v-btn>
-                    </v-flex>
-
-                    <v-flex xs12>
                       <v-btn
                         color="error"
-                        class="mr-4"
-                        block
+                        class="mr-2"
                         @click="deleteNode()"
+                        small
                       >
-                        Delete node and children
+                        Delete
                       </v-btn>
                     </v-flex>
                   </v-layout>
