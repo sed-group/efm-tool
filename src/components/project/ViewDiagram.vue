@@ -81,7 +81,7 @@
       <span>Awesome! You updated the node.</span>
       <v-btn color="white" text @click="snackbarUpdatedNode = false">Close</v-btn>
     </v-snackbar>
-    <v-snackbar v-model="snackbarDeletedtedNode" :timeout="4000" top color="success">
+    <v-snackbar v-model="snackbarDeletedNode" :timeout="4000" top color="success">
       <span>Awesome! You deleted the node.</span>
       <v-btn color="white" text @click="snackbarDeletedNode = false">Close</v-btn>
     </v-snackbar>
@@ -107,6 +107,7 @@ export default {
       user: null,
       snackbarNewNode: false,
       snackbarUpdatedNode: false,
+      snackbarDeletedNode: false,
       selected: false,
       nodeTypes: [
         {nodeType: 'Functional Requirement', abbr: 'FR'}, 

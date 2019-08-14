@@ -60,11 +60,16 @@ export default {
           person: this.user.id,
           status: this.status,
         }
-        db.collection('projects').add(project).then(() => {
+        db.collection('projects').add(project).then((docRef) => {
           this.loading = false
           this.dialog = false
           this.reset()
           this.resetValidation()
+          // insert first element to the diagram
+          let node = {name: 'Click me', project: docRef.id, type: 'FR', description: '', parent:'', creator: this.user.id}
+          db.collection('nodes').add(node).then(() => {
+            this.$emit('nodeAdded')
+          })
           this.$emit('projectAdded')
         })
       }
