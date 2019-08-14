@@ -28,6 +28,7 @@
 <script>
 import db from '@/fb'
 import firebase from 'firebase'
+import router from '@/router'
 
 export default {
   name: 'PopupProject',
@@ -68,9 +69,10 @@ export default {
           // insert first element to the diagram
           let node = {name: 'Click me', project: docRef.id, type: 'FR', description: '', parent:'', creator: this.user.id}
           db.collection('nodes').add(node).then(() => {
-            this.$emit('nodeAdded')
+            //this.$emit('nodeAdded')
           })
-          this.$emit('projectAdded')
+          //this.$emit('projectAdded')
+          router.push('/project/' + docRef.id);
         })
       }
     },
