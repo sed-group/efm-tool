@@ -39,7 +39,7 @@
                     <v-flex xs12>
                       <v-btn
                         color="success"
-                        class="mr-2"
+                        class="ma-1"
                         @click="saveNodeChanges()"
                         :loading="loadingNode"
                         small
@@ -48,7 +48,7 @@
                       </v-btn>
                       <v-btn
                         color="warning"
-                        class="mr-2"
+                        class="ma-1"
                         @click="discardNodeChanges()"
                         :loading="loadingNode"
                         small
@@ -57,7 +57,7 @@
                       </v-btn>
                       <v-btn
                         color="error"
-                        class="mr-2"
+                        class="ma-1"
                         @click="deleteNode()"
                         small
                       >
