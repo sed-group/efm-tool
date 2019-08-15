@@ -9,11 +9,11 @@ export default {
         if (!project.exists) {
           router.push('/dashboard');
         } else {
-          commit('setProject', { ...project.data(), ...project.id})
+          commit('setProject', { ...project.data(), ...{id: project.id}})
         }
       })
       .catch(err => {
         console.log(err)
       })
-    },
+    }
 }

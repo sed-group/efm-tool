@@ -1,5 +1,5 @@
 export default {
-  setProject(state, payload) {
-    state.project = payload;
-  },
+    setProject(state, payload) {
+      state.project = payload;
+    },
 }

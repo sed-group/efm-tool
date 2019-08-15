@@ -13,8 +13,9 @@
                         <v-row>
                             <v-col cols="12" md="4">
                               <v-text-field v-model="project().title" label="Project title" required></v-text-field>
-                              <v-text-field v-model="project().person" label="Person" required disabled></v-text-field>
                               <v-text-field v-model="project().status" label="Status" required></v-text-field>
+                              <v-text-field v-model="project().person" label="Person" required disabled></v-text-field>
+                              <v-text-field v-model="project().id" label="id" required disabled></v-text-field>
                             </v-col>
 
                             <v-col cols="12" md="8">
@@ -31,14 +32,14 @@
                                   Save changes
                                 </v-btn>
                                 
-                                <v-btn
+                                <!-- <v-btn
                                   color="warning"
                                   class="mr-4"
                                   @click="discardProjectChanges()"
                                   :loading="loadingProject"
                                 >
                                   Discard changes
-                                </v-btn>
+                                </v-btn> -->
                                 
                                 <v-btn
                                   color="error"
@@ -113,15 +114,6 @@ export default {
   },
   data(){
     return{
-      // project: {
-      //   title: '',
-      // },
-      projectChanged: false,
-      originalProject: {
-        title: '',
-        status: '',
-        description: '',
-      },
       loadingProject: false,
       snackbarUpdatedProject: false,
       snackbarDeletedProject: false,
@@ -262,32 +254,23 @@ export default {
           console.error("Error deleting project: ", error);
       });
     },
-    discardProjectChanges(){
-      this.selectedProject.title = this.originalProject.title;
-      this.selectedProject.status = this.originalProject.status;
-      this.selectedProject.description= this.originalProject.description;
-    },
     saveProjectChanges(){
-      if (this.project.title == this.originalProject.title & this.project.status == this.originalProject.status &this.project.description == this.originalProject.description) {
-      } else {
-        // save to db
-        if(true) {
-          this.loadingProject = true
-          const project = { 
-            title: this.project.title,
-            person: this.project.person,
-            status: this.project.status,
-            description: this.project.description,
-          }
-          db.collection('projects').doc(this.$route.params.id).set(project).then(() => {
-            this.loadingProject = false
-            this.snackbarUpdatedProject = true;
-          })
-          .catch(function(error) {
-              console.error("Error writing document: ", error);
-          });
-        }
+      // save to db
+      this.loadingProject = true
+      const project = { 
+        title: this.project().title,
+        person: this.project().person,
+        status: this.project().status,
+        description: this.project().description,
       }
+      db.collection('projects').doc(this.$route.params.id).set(project).then(() => {
+        this.loadingProject = false
+        this.snackbarUpdatedProject = true;
+      })
+      .catch(function(error) {
+          console.error("Error writing document: ", error);
+      });
+
     },
   },
   created(){
