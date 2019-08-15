@@ -208,7 +208,6 @@ export default {
     },
     userSlug () {
       let user = this.$store.getters.user
-      console.log(user.slug)
       return user.slug
     },
     userName () {

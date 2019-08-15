@@ -5,20 +5,20 @@
         <v-col cols="12">
           <v-expansion-panels>
             <v-expansion-panel>
-              <v-expansion-panel-header>Project: {{ project.title }}</v-expansion-panel-header>
+              <v-expansion-panel-header>Project: {{ project().title }}</v-expansion-panel-header>
               <v-expansion-panel-content>
 
                 <v-form>
                     <v-container>
                         <v-row>
                             <v-col cols="12" md="4">
-                              <v-text-field v-model="project.title" label="Project title" required></v-text-field>
-                              <v-text-field v-model="project.person" label="Person" required disabled></v-text-field>
-                              <v-text-field v-model="project.status" label="Status" required></v-text-field>
+                              <v-text-field v-model="project().title" label="Project title" required></v-text-field>
+                              <v-text-field v-model="project().person" label="Person" required disabled></v-text-field>
+                              <v-text-field v-model="project().status" label="Status" required></v-text-field>
                             </v-col>
 
                             <v-col cols="12" md="8">
-                              <v-textarea v-model="project.description" label="Description" required></v-textarea>
+                              <v-textarea v-model="project().description" label="Description" required></v-textarea>
                             </v-col>
                             <v-col cols="12">
                               <v-flex justify="space-around">
@@ -113,9 +113,9 @@ export default {
   },
   data(){
     return{
-      project: {
-        title: '',
-      },
+      // project: {
+      //   title: '',
+      // },
       projectChanged: false,
       originalProject: {
         title: '',
@@ -234,6 +234,9 @@ export default {
     }
   },
   methods: {
+    project () {
+      return this.$store.getters.project
+    },
     deleteProject(){
       db.collection('projects').doc(this.$route.params.id).delete().then(() => {
         this.snackbarDeletedProject = true;
@@ -288,14 +291,7 @@ export default {
     },
   },
   created(){
-    let ref = db.collection('projects')
-    ref.doc(this.$route.params.id).get()
-    .then(project => {
-      this.project = project.data();
-      if (!project.exists) {
-        router.push('/dashboard');
-      }
-    })
+    this.$store.dispatch('setProjectAction', this.$route.params.id)
   }
 }
 </script>
