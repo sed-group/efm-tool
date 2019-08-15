@@ -11,7 +11,8 @@
           EFM Tool helps product design teams succeed
         </v-row>
         <v-row>
-          <v-btn class="ma-2" router to="Signup" color="success" dark large rounded>Get started</v-btn>
+          <v-btn v-if="userLogedIn()" class="ma-2" router to="Dashboard" color="success" dark large rounded>Get started</v-btn>
+          <v-btn v-if="!userLogedIn()" class="ma-2" router to="Signup" color="success" dark large rounded>Get started</v-btn>
           <v-btn class="ma-2" router to="docs" color="primary" dark large rounded text>
             <v-icon left>mdi-information</v-icon> Learn more
           </v-btn>
@@ -32,6 +33,9 @@ export default {
     }
   },
   methods: {
+    userLogedIn () {
+      return Boolean(this.$store.getters.user)
+    },
   },
   computed: {
   },
