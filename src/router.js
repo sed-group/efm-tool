@@ -9,7 +9,8 @@ import Login from './components/auth/Login.vue'
 import ViewProfile from './components/profile/ViewProfile.vue'
 import ViewProject from './components/project/ViewProject.vue'
 import Docs from './components/documentation/Docs.vue'
-import firebase from 'firebase'
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 Vue.use(Router)
 

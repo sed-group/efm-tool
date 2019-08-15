@@ -77,7 +77,8 @@
 <script>
 import PopupProject from '@/components/PopupProject'
 import db from '@/fb'
-import firebase from 'firebase'
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 export default {
   name: 'Dashboard',

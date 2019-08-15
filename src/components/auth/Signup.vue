@@ -23,7 +23,6 @@
 <script>
 import slugify from 'slugify'
 import db from '@/fb'
-import firebase from 'firebase'
 
   export default {
     name: 'Signup',
