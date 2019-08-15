@@ -34,7 +34,8 @@ export const store = new Vuex.Store({
         let ref = db.collection('users').doc(payload.slug)
         ref.get().then(doc => {
           if (doc.exists) {
-            throw 'This a user with this name already exists, please choose another.'
+            console.log('user already exists')
+            throw {message: 'The name is already in use by another account.'}
           } else {
             // This alias does not yet exists in the db
             firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
@@ -51,11 +52,17 @@ export const store = new Vuex.Store({
                   resolve()
                 })
               })
+              .catch(err => {
+                commit('setUserLoginStatus', 'failure')
+                commit('setUserLoginError', err)
+                reject(err)
+              })
           }
         })
         .catch(err => {
           commit('setUserLoginStatus', 'failure')
-          reject(err.message)
+          commit('setUserLoginError', err)
+          reject(err)
         })
       })
     },
@@ -77,7 +84,8 @@ export const store = new Vuex.Store({
           })
           .catch(err => {
             commit('setUserLoginStatus', 'failure')
-            reject(err.message)
+            commit('setUserLoginError', err)
+            reject(err)
           })
       })
     },

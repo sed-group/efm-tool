@@ -38,7 +38,7 @@ export default {
                     this.$router.push({ name: 'Dashboard' })
                 })
                 .catch(err => {
-                    console.log(err)
+                    this.feedback = err.message
                 })
         } else {
             this.feedback = 'Please fill in both fields'

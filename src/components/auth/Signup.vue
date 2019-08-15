@@ -65,6 +65,9 @@ import firebase from 'firebase'
             .then(() => {
               this.$router.push({ name: 'Dashboard' })
             })
+            .catch(err => {
+              this.feedback = err.message
+            })
         }
       },
       reset () {
