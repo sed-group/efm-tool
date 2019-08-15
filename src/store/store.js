@@ -65,12 +65,15 @@ export const store = new Vuex.Store({
           .then(cred => {
             // Get additional user data from the database
             let ref = db.collection('users').where('user_id', '==', cred.user.uid)
-            ref.get().then(doc => {
-                commit('setUser', {name: doc.name, slug: doc.id, user_id: cred.user.uid})
+            ref.get().then(snapshot => {
+              snapshot.forEach(doc => {
+                commit('setUser', {name: doc.data().name, slug: doc.id, user_id: cred.user.uid})
                 commit('setUserLoginStatus', 'success')
                 commit('setUserLoginError', null)
                 resolve()
+              })
             })
+
           })
           .catch(err => {
             commit('setUserLoginStatus', 'failure')

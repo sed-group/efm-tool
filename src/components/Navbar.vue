@@ -2,7 +2,7 @@
   <nav>
 
     <v-app-bar text app class="elevation-0 grey lighten-5">
-      <v-app-bar-nav-icon v-if="user" @click="drawer = !drawer" class="grey--text"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-if="userLogedIn()" @click="drawer = !drawer" class="grey--text"></v-app-bar-nav-icon>
       <router-link :to="{ name: 'Home' }">
         <v-img
           class="mx-2"
@@ -21,27 +21,27 @@
       
       <v-spacer></v-spacer>
       
-      <v-btn v-if="!user" text color="grey" :to="{ path: '/signup'}" append>
+      <v-btn v-if="!userLogedIn()" text color="grey" :to="{ path: '/signup'}" append>
         <span>Sign Up</span>
         <v-icon right>mdi-account-plus</v-icon>
       </v-btn>
-      <v-btn v-if="!user" text color="grey" :to="{ path: '/login'}" append>
+      <v-btn v-if="!userLogedIn()" text color="grey" :to="{ path: '/login'}" append>
         <span>Login</span>
         <v-icon right>mdi-login</v-icon>
       </v-btn>
-      <v-btn v-if="user" text color="grey" @click="logout">
+      <v-btn v-if="userLogedIn()" text color="grey" @click="logout">
         <span>Logout</span>
         <v-icon right>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-if="user" app v-model="drawer" class="secondary">
+    <v-navigation-drawer v-if="userLogedIn()" app v-model="drawer" class="secondary">
       <v-layout column align-center>
         <v-flex class="mt-5 text-center">
           <v-avatar size="100">
             <img src="/user.png">
           </v-avatar>
-          <p class="white--text subheading mt-1">{{ this.name }}</p>
+          <p class="white--text subheading mt-1">{{ this.userName() }}</p>
         </v-flex>
       </v-layout>
 
@@ -185,11 +185,12 @@ export default {
     return {
       betaNotice: true,
       drawer: false,
-      user: '',
-      name: '',
       id: '',
       profile: null,
-      links: [],
+      links: [
+        { icon: 'mdi-account-circle', text: 'Profile', route: '/profile/' + this.userSlug() },
+        { icon: 'dashboard', text: 'Dashboard', route: '/dashboard' },
+      ],
       dialogPrivacy: false,
       dialogTerms: false,
       items: [
@@ -206,9 +207,6 @@ export default {
       ],
     }
   },
-  computed: {
-    
-  },
   methods: {
     logout(){
       this.$store.dispatch('logoutAction')
@@ -216,35 +214,37 @@ export default {
           this.$router.push({ name: 'Home' })
         })
     },
-  },
-  created(){
-    // let user = firebase.auth().currentUser
-    firebase.auth().onAuthStateChanged((user) => {
-      if(user){
-        this.user = user
-      } else {
-        this.user = null
+    userLogedIn () {
+      return this.$store.getters.userLoginStatus == 'success'
+    },
+    userSlug () {
+      let user = this.$store.getters.user
+      try {
+        return user.slug
+      } catch {
+        return ''
       }
-    })
-    
-    // get current user
-    let user = firebase.auth().currentUser
-    // find the user record
-    db.collection('users').where('user_id', '==', user.uid).get()
-    .then(snapshot => {
-      snapshot.forEach((doc) => {
-        this.name = doc.data().name;
-        //console.log(this.name);
-        this.id = doc.id;
-        //console.log(this.id);
-      });
-      this.links = [
-        { icon: 'mdi-account-circle', text: 'Profile', route: '/profile/'+this.id },
-        { icon: 'dashboard', text: 'Dashboard', route: '/dashboard' },
-        // { icon: 'folder', text: 'My Projects', route: '/projects' },
-        // { icon: 'person', text: 'Team', route: '/team' },
-      ]
-    })
+    },
+    userName () {
+      let user = this.$store.getters.user
+      try {
+        return user.name
+      } catch {
+        return ''
+      }
+    },
+  },
+  created() {
+    // Get the current user if it is signed-in
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in.
+        this.$store.commit('setUser', {name: 'test', slug: 'test', user_id: 'user.uid'})
+      } else {
+        // No user is signed in.
+        this.$store.commit('setUser', null)
+      }
+    });
   }
 }
 </script>
