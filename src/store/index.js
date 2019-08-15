@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
   modules: {
     auth,
     project,
-    diagram
+    diagram,
   },
   state: {
   },
