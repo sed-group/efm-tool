@@ -9,7 +9,6 @@ export default {
       let ref = db.collection('users').doc(payload.slug)
       ref.get().then(doc => {
         if (doc.exists) {
-          console.log('user already exists')
           throw {message: 'The name is already in use by another account.'}
         } else {
           // This alias does not yet exists in the db
