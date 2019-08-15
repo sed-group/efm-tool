@@ -15,7 +15,7 @@
       <v-toolbar-title class="toolbar-title text-uppercase">
         <router-link :to="{ name: 'Home' }">
           <span class="grey--text">E-FM</span>
-          <span class="grey--text font-weight-light">TOOL</span>
+          <span class="grey--text font-weight-light">TOOL{{ this.$store.user }}</span>
         </router-link>
       </v-toolbar-title>
       
@@ -46,12 +46,20 @@
       </v-layout>
 
       <v-list>
-        <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
+        <v-list-item router :to="'/profile/' + this.userSlug()">
           <v-list-item-action>
-            <v-icon class="white--text">{{ link.icon }}</v-icon>
+            <v-icon class="white--text">mdi-account-circle</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="white--text">{{ link.text }}</v-list-item-title>
+            <v-list-item-title class="white--text">Profile</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item router :to="'/dashboard'">
+          <v-list-item-action>
+            <v-icon class="white--text">dashboard</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="white--text">Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -172,10 +180,6 @@ export default {
       drawer: false,
       id: '',
       profile: null,
-      links: [
-        { icon: 'mdi-account-circle', text: 'Profile', route: '/profile/' + this.userSlug() },
-        { icon: 'dashboard', text: 'Dashboard', route: '/dashboard' },
-      ],
       dialogPrivacy: false,
       dialogTerms: false,
       items: [
@@ -200,15 +204,12 @@ export default {
         })
     },
     userLogedIn () {
-      return this.$store.getters.userLoginStatus == 'success'
+      return Boolean(this.$store.getters.user)
     },
     userSlug () {
       let user = this.$store.getters.user
-      try {
-        return user.slug
-      } catch {
-        return ''
-      }
+      console.log(user.slug)
+      return user.slug
     },
     userName () {
       let user = this.$store.getters.user
@@ -224,7 +225,17 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
-        this.$store.commit('setUser', {name: 'test', slug: 'test', user_id: 'user.uid'})
+        let ref = db.collection('users')
+
+        //get current user
+        ref.where('user_id', '==', firebase.auth().currentUser.uid).get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              let name = doc.data().name;
+              let slug = doc.id;
+              this.$store.commit('setUser', {name: name, slug: slug, user_id: user.uid})
+            })
+          })
       } else {
         // No user is signed in.
         this.$store.commit('setUser', null)
