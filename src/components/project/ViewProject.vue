@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import ViewDiagram from '@/components/project/ViewDiagram'
+import ViewDiagram from '@/components/diagram/ViewDiagram'
 import db from '@/fb'
 import router from '@/router'
 
