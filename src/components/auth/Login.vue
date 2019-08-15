@@ -30,13 +30,16 @@ export default {
     login(){
         if(this.email && this.password){
             this.feedback = null
-            firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-            .then(cred => {
-            //console.log(cred.user)
-            this.$router.push({ name: 'Dashboard' })
-            }).catch(err => {
-            this.feedback = err.message
-            })
+            
+            let user = {email: this.email, password: this.password}
+
+            this.$store.dispatch('loginAction', user)
+                .then(() => {
+                    this.$router.push({ name: 'Dashboard' })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         } else {
             this.feedback = 'Please fill in both fields'
         }

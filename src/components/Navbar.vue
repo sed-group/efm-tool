@@ -211,9 +211,10 @@ export default {
   },
   methods: {
     logout(){
-      firebase.auth().signOut().then(() => {
-        this.$router.push({ name: 'Home' })
-      })
+      this.$store.dispatch('logoutAction')
+        .then(() => {
+          this.$router.push({ name: 'Home' })
+        })
     },
   },
   created(){

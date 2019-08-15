@@ -53,33 +53,18 @@ import firebase from 'firebase'
         if (this.$refs.form.validate()) {
           this.snackbarProject = true;
 
-          this.slug = slugify(this.name, {
+          let slug = slugify(this.name, {
             replacement: '-',
             remove: /[$*_+~.()'"!\-:@]/g,
             lower: true
           })
-          let ref = db.collection('users').doc(this.slug)
-          ref.get().then(doc => {
-          if(doc.exists){
-              this.feedback = 'This name already exists'
-          } else {
-              // this alias does not yet exists in the db
-              firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-            .then(cred => {
-              ref.set({
-                name: this.name,
-                user_id: cred.user.uid
-              })
-            }).then(() => {
+          
+          let newUser = {name: this.name, email: this.email, password: this.password, slug: slug}
+
+          this.$store.dispatch('signupAction', newUser)
+            .then(() => {
               this.$router.push({ name: 'Dashboard' })
             })
-              .catch(err => {
-              //console.log(err.message)
-              this.feedback = err.message
-              })
-              //this.reset();
-          }
-          })
         }
       },
       reset () {
