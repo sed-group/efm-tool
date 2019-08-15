@@ -12,6 +12,17 @@ export const store = new Vuex.Store({
     userLoginError: null,
     project: null,
   },
+  getters: {
+    user(state) {
+      return state.user
+    },
+    userLoginStatus(state) {
+      return state.userLoginStatus
+    },
+    userLoginError(state) {
+      return state.userLoginError
+    },
+  },
   mutations: {
     setUser(state, payload) {
       state.user = payload;
@@ -100,17 +111,6 @@ export const store = new Vuex.Store({
           commit('setUserLoginStatus', 'failure')
           commit('setUserLoginError', err.message)
         })
-    },
-  },
-  getters: {
-    user(state) {
-      return state.user
-    },
-    userLoginStatus(state) {
-      return state.userLoginStatus
-    },
-    userLoginError(state) {
-      return state.userLoginError
     },
   },
 })

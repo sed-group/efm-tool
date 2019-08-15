@@ -31,7 +31,7 @@
             </v-toolbar>
             <div class="canvas">
             </div>
-            <PopupNode :selected="{selected: selected, type: selectedNode.type, name: selectedNode.name}" @nodeAdded="snackbarNewNode = true" />
+            <PopupNode :selected="{selected: selected, type: selectedNode.type, name: selectedNode.name, children: selectedNode.children}" @nodeAdded="snackbarNewNode = true" />
           </v-card>
         </v-col>
 
@@ -145,6 +145,7 @@ export default {
         type: '',
         parent: '',
         description: '',
+        children: [],
       },
       nodeChanged: false,
       originalNode: {
@@ -153,6 +154,7 @@ export default {
         type: '',
         parent: '',
         description: '',
+        children: [],
       },
       loadingNode: false,
     }
@@ -172,6 +174,7 @@ export default {
       this.selectedNode.name = this.originalNode.name;
       this.selectedNode.parent = this.originalNode.parent; // watch out for this when we do the children
       this.selectedNode.description= this.originalNode.description;
+      this.selectedNode.children= this.originalNode.children;
     },
     saveNodeChanges(){
       if (JSON.stringify(this.selectedNode) == JSON.stringify(this.originalNode)) {
@@ -310,6 +313,7 @@ export default {
                   type: d.data.type,
                   parent: d.data.parent,
                   description: d.data.description,
+                  children: [],
                 }
                 vueComponent.selectedNode = {
                   id: d.data.id,
@@ -317,6 +321,7 @@ export default {
                   type: d.data.type,
                   parent: d.data.parent,
                   description: d.data.description,
+                  children: [],
                 }
                 d3.selectAll('rect')
                   .classed("selected", false)
@@ -334,6 +339,7 @@ export default {
                   type: '',
                   parent: '',
                   description: '',
+                  children: []
                 }
                 node.transition()
                   .attr("stroke","#555")
