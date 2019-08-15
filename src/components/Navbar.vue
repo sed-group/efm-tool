@@ -55,21 +55,6 @@
           </v-list-item-content>
         </v-list-item>
 
-<!--         <v-list-group class="white--text" v-for="item in items" :key="item.title" v-model="item.active" :prepend-icon="item.action"
-            no-action>
-            <template v-slot:activator>
-                <v-list-item-content>
-                    <v-list-item-title class="white--text" v-text="item.title"></v-list-item-title>
-                </v-list-item-content>
-            </template>
-
-            <v-list-item v-for="subItem in item.items" :key="subItem.title" @click="">
-                <v-list-item-content>
-                    <v-list-item-title class="white--text" v-text="subItem.title"></v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-        </v-list-group> -->
-
       </v-list>
 
       <template v-slot:append>

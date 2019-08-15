@@ -211,9 +211,6 @@ export default {
         graph.selectAll('.node').remove();
         graph.selectAll('.link').remove();
 
-        // update ordinal scale domain
-        // colour.domain(data.map(d => d.department));
-
         // get updated root Node data
         const rootNode = stratify(data);
         const treeData = tree(rootNode).descendants();
@@ -322,8 +319,6 @@ export default {
         // append rects to enter nodes
         enterNodes.append('rect')
           .attr('class', d => d.data.type)
-          // apply the ordinal scale for fill
-          //.attr('fill', d => colour(d.data.type))
           .attr('stroke', '#555')
           .attr('stroke-width', 1)
           .attr('width', d => d.data.name.length * 10 + 10)
@@ -338,19 +333,6 @@ export default {
           .attr('dy', 5)
           .attr('fill', 'white')
           .text(d => d.data.name); 
-
-// svg.append("rect")
-//     .attr("fill", "none")
-//     .attr("pointer-events", "all")
-//     .attr("width", width)
-//     .attr("height", height)
-//     .call(d3.zoom()
-//         .scaleExtent([1, 8])
-//         .on("zoom", zoom));
-
-// function zoom() {
-//   graph.attr("transform", d3.event.transform);
-// }
 
       };
 

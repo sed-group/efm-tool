@@ -134,9 +134,7 @@ export default {
     },
     saveProjectChanges(){
       if (this.project.title == this.originalProject.title & this.project.status == this.originalProject.status &this.project.description == this.originalProject.description) {
-        //console.log('Nothing changed!')
       } else {
-        //console.log('Something changed')
         // save to db
         if(true) {
           this.loadingProject = true
