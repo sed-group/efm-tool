@@ -32,7 +32,7 @@
         <v-form class="px-3" ref="form">
           <v-text-field v-model="name" label="Name" prepend-icon="folder" :rules="inputRules"></v-text-field>
           <v-text-field v-model="parent" label="Parent" prepend-icon="mdi-crown">{{ selected.name }}</v-text-field>
-          <v-select v-model="type" label="Type" prepend-icon="mdi-format-list-bulleted-type" :items="nodeTypes" :hint="`${type}`" item-text="nodeType" item-value="abbr" :rules="inputRules">{{ selected.type }}</v-select>
+          <v-select v-model="type" label="Type" prepend-icon="mdi-format-list-bulleted-type" :items="allowedChildren(selected.type)" :hint="`${type}`" item-text="nodeType" item-value="abbr" :rules="inputRules">{{ selected.type }}</v-select>
           <v-textarea v-model="description" label="Description" prepend-icon="edit"></v-textarea>
 
           <v-spacer></v-spacer>
@@ -66,17 +66,27 @@ export default {
       ],
       loading: false,
       dialog: false,
-      nodeTypes: [
-        {nodeType: 'Functional Requirement', abbr: 'FR'}, 
-        {nodeType: 'Design Solution', abbr: 'DS'}, 
-        {nodeType: 'Constraint', abbr: 'C'}
-      ],
+      // nodeTypes: [
+      //   {nodeType: 'Functional Requirement', abbr: 'FR'}, 
+      //   {nodeType: 'Design Solution', abbr: 'DS'}, 
+      //   {nodeType: 'Constraint', abbr: 'C'}
+      // ],
       user: null,
       direction: 'top',
       fab: false,
     }
   },
   methods: {
+    userSlug () {
+      let user = this.$store.getters.user
+      return user.slug
+    },
+    nodeTypes () {
+      return this.$store.getters.nodeTypes
+    },
+    allowedChildren (nodeType) {
+      return this.$store.getters.allowedChildren(nodeType)
+    },
     submit() {
       if(this.$refs.form.validate()) {
         this.loading = true

@@ -5,6 +5,7 @@
       <v-row>
 
         <v-col xs="6" sm="8" lg="9" xl="10">
+          <!-- Card for the diagram -->
           <v-card class="px-3">
             <v-toolbar flat>
               <v-toolbar-items>
@@ -36,8 +37,9 @@
         </v-col>
 
         <v-col xs="6" sm="4" lg="3" xl="2">
+          <!-- Card for node properties -->
           <v-card v-if="selected">
-            <v-card-title class="title white--text" v-bind:class="[selectedNode.type]">{{ nodeTypes.filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}</v-card-title>
+            <v-card-title class="title white--text" v-bind:class="[selectedNode.type]">{{ nodeTypes().filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}</v-card-title>
               <v-form>
                 <v-container grid-list-xl>
                   <v-layout wrap>
@@ -118,7 +120,6 @@
 <script>
 import * as d3 from 'd3'
 import db from '@/fb'
-import firebase from 'firebase'
 import PopupNode from '@/components/PopupNode'
 import { appendFile } from 'fs';
 
@@ -134,11 +135,6 @@ export default {
       snackbarUpdatedNode: false,
       snackbarDeletedNode: false,
       selected: false,
-      nodeTypes: [
-        {nodeType: 'Functional Requirement', abbr: 'FR'}, 
-        {nodeType: 'Design Solution', abbr: 'DS'}, 
-        {nodeType: 'Constraint', abbr: 'C'}
-      ],
       selectedNode: {
         id: '',
         name: '',
@@ -162,6 +158,13 @@ export default {
   props: {
   },
   methods: {
+    userSlug () {
+      let user = this.$store.getters.user
+      return user.slug
+    },
+    nodeTypes () {
+      return this.$store.getters.nodeTypes
+    },
     deleteNode() {
       db.collection('nodes').doc(this.selectedNode.id).delete().then(() => {
         this.snackbarDeletedNode = true;
@@ -181,7 +184,7 @@ export default {
         console.log('Nothing changed!')
       } else {
         console.log('Something changed')
-        // save to db
+        // save to database
         if(true) {
           this.loadingNode = true
           const node = { 
@@ -189,7 +192,7 @@ export default {
             description: this.selectedNode.description,
             type: this.selectedNode.type,
             parent: this.selectedNode.parent,
-            creator: this.user.id,
+            creator: this.userSlug(),
             project: this.$route.params.id,
           }
           db.collection('nodes').doc(this.selectedNode.id).set(node).then(() => {
@@ -404,53 +407,29 @@ export default {
   mounted(){
     this.createSvg();
   },
-  created(){
-    let ref = db.collection('users')
-
-    //get current user
-    ref.where('user_id', '==', firebase.auth().currentUser.uid).get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          this.user = doc.data();
-          this.user.id = doc.id;
-        })
-      })
-  }
 };
 
 </script>
 
 <style>
-.DS.selected {
+.selected {
   stroke-dasharray: 6;
+  stroke-linecap: round;
+}
+.DS {
   stroke: #FF6F00;
-  stroke-linecap: round;
-}
-.FR.selected {
-  stroke-dasharray: 6;
-  stroke: #0D47A1;
-  stroke-linecap: round;
-}
-.C.selected {
-  stroke-dasharray: 6;
-  stroke: #424242;
-  stroke-linecap: round;
-}
-.CC.selected {
-  stroke-dasharray: 6;
-  stroke: #757575;
-  stroke-linecap: round;
-}
-rect.FR {
-  fill: #2196F3;
-}
-rect.DS {
   fill: #FFC107;
 }
-rect.C {
+.FR {
+  stroke: #0D47A1;
+  fill: #2196F3;
+}
+.C {
+  stroke: #424242;
   fill: #000000;
 }
-rect.CC {
+.CC {
+  stroke: #757575;
   fill: #9E9E9E;
 }
 .v-card__title.FR {
