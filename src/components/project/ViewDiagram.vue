@@ -3,13 +3,38 @@
 
     <v-container py-0>
       <v-row>
+
         <v-col xs="6" sm="8" lg="9" xl="10">
           <v-card class="px-3">
+            <v-toolbar flat>
+              <v-toolbar-items>
+                <v-btn icon v-if="false"> <!-- Don't show until function developed -->
+                  <v-icon>mdi-download</v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                  <v-icon>mdi-magnify-plus-outline</v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                  <v-icon>mdi-backup-restore</v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                  <v-icon>mdi-magnify-minus-outline</v-icon>
+                </v-btn>
+
+                <v-btn icon v-if="false"> <!-- Don't show until function developed -->
+                  <v-icon>mdi-arrow-collapse-up</v-icon>
+                </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
             <div class="canvas">
             </div>
             <PopupNode :selected="{selected: selected, type: selectedNode.type, name: selectedNode.name}" @nodeAdded="snackbarNewNode = true" />
           </v-card>
         </v-col>
+
         <v-col xs="6" sm="4" lg="3" xl="2">
           <v-card v-if="selected">
             <v-card-title class="title white--text" v-bind:class="[selectedNode.type]">{{ nodeTypes.filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}</v-card-title>
@@ -67,9 +92,9 @@
                   </v-layout>
                 </v-container>
               </v-form>
-
           </v-card>
         </v-col>
+
       </v-row>
     </v-container>
     

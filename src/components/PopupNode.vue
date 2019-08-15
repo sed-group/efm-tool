@@ -3,7 +3,7 @@
     
     <template v-slot:activator="{ on }">
       
-      <v-speed-dial v-if="selected.selected" v-model="fab" absolute top right direction="left" color="success" transition="slide-x-reverse-transition">
+      <v-speed-dial v-if="selected.selected" v-model="fab" absolute bottom right direction="left" color="success" transition="slide-x-reverse-transition">
           
           <template v-slot:activator>
               <v-btn v-model="fab" color="success" dark fab>
