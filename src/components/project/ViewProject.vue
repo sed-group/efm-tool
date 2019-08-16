@@ -74,7 +74,6 @@
                   :items-per-page="10"
                   single-select
                   item-key="name"
-                  group-by="type"
                   show-select
                   :search="search"
                   class="elevation-0"
