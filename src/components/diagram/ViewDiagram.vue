@@ -414,6 +414,9 @@ export default {
 </script>
 
 <style>
+.node {
+  cursor: pointer;
+}
 .selected {
   stroke-dasharray: 6;
   stroke-linecap: round;
