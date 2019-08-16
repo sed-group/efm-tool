@@ -42,6 +42,15 @@
         <PopupProject @projectAdded="snackbarProject = true" />
       </v-layout>
       
+      <v-card v-if="myProjects.length == 0" class="d-flex align-center" height="100">
+        <v-layout>
+          <v-flex xs12>
+            <div class="text-center grey--text">
+              You don't have any projects.
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-card>
       <template v-for="project in myProjects">
         <v-hover v-slot:default="{ hover }" :key="project.title">
           <v-card class="px-3 elevation-0" :class="{ 'on-hover': hover }" text :style="{ cursor: 'pointer'}">
