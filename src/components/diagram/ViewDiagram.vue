@@ -39,7 +39,7 @@
         <v-col xs="6" sm="4" lg="3" xl="2">
           <!-- Card for node properties -->
           <v-card v-if="selected">
-            <v-card-title class="title white--text" v-bind:class="[selectedNode.type]">{{ nodeTypes().filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}</v-card-title>
+            <v-card-title class="title white--text" v-bind:class="[selectedNode.type]">{{ nodeTypes.filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}</v-card-title>
               <v-form>
                 <v-container grid-list-xl>
                   <v-layout wrap>
@@ -157,7 +157,7 @@ export default {
   },
   props: {
   },
-  methods: {
+  computed: {
     userSlug () {
       let user = this.$store.getters.user
       return user.slug
@@ -165,6 +165,8 @@ export default {
     nodeTypes () {
       return this.$store.getters.nodeTypes
     },
+  },
+  methods: {
     deleteNode() {
       db.collection('nodes').doc(this.selectedNode.id).delete().then(() => {
         this.snackbarDeletedNode = true;
@@ -192,7 +194,7 @@ export default {
             description: this.selectedNode.description,
             type: this.selectedNode.type,
             parent: this.selectedNode.parent,
-            creator: this.userSlug(),
+            creator: this.userSlug,
             project: this.$route.params.id,
           }
           db.collection('nodes').doc(this.selectedNode.id).set(node).then(() => {
