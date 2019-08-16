@@ -233,6 +233,7 @@ export default {
 
       const tree = d3.tree()
         .size([width, height]);
+        //.nodeSize([100, 100]);
 
       // create ordinal scale
       const colour = d3.scaleOrdinal(['#FFC107', '#2196F3', '#000000', '#9E9E9E']);
