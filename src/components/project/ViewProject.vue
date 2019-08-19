@@ -161,7 +161,7 @@ export default {
           });
       })
       .catch(function(error) {
-          console.error("Error deleting project: ", error);
+          //console.error("Error deleting project: ", error);
       });
     },
     saveProjectChanges(){
@@ -178,7 +178,7 @@ export default {
         this.snackbarUpdatedProject = true;
       })
       .catch(function(error) {
-          console.error("Error writing document: ", error);
+          //console.error("Error writing document: ", error);
       });
 
     },
