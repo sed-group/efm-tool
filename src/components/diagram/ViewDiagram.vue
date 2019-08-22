@@ -30,8 +30,10 @@
                 </v-btn>
               </v-toolbar-items>
             </v-toolbar>
+            <!-- This is where the d3 svg is loaded -->
             <div class="canvas">
             </div>
+            <!-- This is where the node add button is loaded -->
             <PopupNode 
             :selected="{
               selected: selected, 
@@ -52,62 +54,63 @@
               class="title white--text" 
               v-bind:class="[selectedNode.type]">{{ nodeTypes.filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}
             </v-card-title>
-              <v-form>
-                <v-container grid-list-xl>
-                  <v-layout wrap>
-                    <v-flex xs12>
-                      <v-text-field
-                        v-model.lazy="selectedNode.name"
-                        label="Name"
-                        required
-                        outlined
-                      ></v-text-field>
-                      <v-text-field
-                        v-model.lazy="selectedNode.parent"
-                        label="Parent"
-                        required
-                        outlined
-                        disabled
-                      ></v-text-field>
-                      <v-textarea
-                        v-model.lazy="selectedNode.description"
-                        label="Description"
-                        outlined
-                      ></v-textarea>
-                      <div class="caption grey--text">{{ selectedNode.id }}</div>
-                    </v-flex>
+            <v-form>
+              <v-container grid-list-xl>
+                <v-layout wrap>
+                  <v-flex xs12>
+                    <v-text-field
+                      v-model.lazy="selectedNode.name"
+                      label="Name"
+                      required
+                      outlined
+                    ></v-text-field>
+                    <!-- This should be a select menu using the real names of the nodes that could be the parents of the selected node -->
+                    <v-text-field
+                      v-model.lazy="selectedNode.parent"
+                      label="Parent"
+                      required
+                      outlined
+                      disabled
+                    ></v-text-field>
+                    <v-textarea
+                      v-model.lazy="selectedNode.description"
+                      label="Description"
+                      outlined
+                    ></v-textarea>
+                    <div class="caption grey--text">{{ selectedNode.id }}</div>
+                  </v-flex>
 
-                    <v-flex xs12>
-                      <v-btn
-                        color="success"
-                        class="ma-1"
-                        @click="saveNodeChanges()"
-                        :loading="loadingNode"
-                        small
-                      >
-                        Save
-                      </v-btn>
-                      <v-btn
-                        color="warning"
-                        class="ma-1"
-                        @click="discardNodeChanges()"
-                        :loading="loadingNode"
-                        small
-                      >
-                        Reset
-                      </v-btn>
-                      <v-btn
-                        color="error"
-                        class="ma-1"
-                        @click="deleteNode()"
-                        small
-                      >
-                        Delete
-                      </v-btn>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-form>
+                  <v-flex xs12>
+                    <v-btn
+                      color="success"
+                      class="ma-1"
+                      @click="saveNodeChanges()"
+                      :loading="loadingNode"
+                      small
+                    >
+                      Save
+                    </v-btn>
+                    <v-btn
+                      color="warning"
+                      class="ma-1"
+                      @click="discardNodeChanges()"
+                      :loading="loadingNode"
+                      small
+                    >
+                      Reset
+                    </v-btn>
+                    <v-btn
+                      color="error"
+                      class="ma-1"
+                      @click="deleteNode()"
+                      small
+                    >
+                      Delete
+                    </v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-form>
           </v-card>
         </v-col>
 
