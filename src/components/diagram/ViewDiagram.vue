@@ -61,6 +61,7 @@
                         label="Description"
                         outlined
                       ></v-textarea>
+                      <div class="caption grey--text">{{ selectedNode.id }}</div>
                     </v-flex>
 
                     <v-flex xs12>
