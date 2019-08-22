@@ -13,15 +13,15 @@
                   <v-icon>mdi-download</v-icon>
                 </v-btn>
 
-                <v-btn icon>
+                <v-btn icon v-if="false"> <!-- Don't show until function developed -->
                   <v-icon>mdi-magnify-plus-outline</v-icon>
                 </v-btn>
 
-                <v-btn icon>
+                <v-btn icon v-if="false"> <!-- Don't show until function developed -->
                   <v-icon>mdi-backup-restore</v-icon>
                 </v-btn>
 
-                <v-btn icon>
+                <v-btn icon v-if="false"> <!-- Don't show until function developed -->
                   <v-icon>mdi-magnify-minus-outline</v-icon>
                 </v-btn>
 
@@ -32,14 +32,26 @@
             </v-toolbar>
             <div class="canvas">
             </div>
-            <PopupNode :selected="{selected: selected, type: selectedNode.type, name: selectedNode.name, id: selectedNode.id, children: selectedNode.children}" @nodeAdded="snackbarNewNode = true" />
+            <PopupNode 
+            :selected="{
+              selected: selected, 
+              type: selectedNode.type, 
+              name: selectedNode.name, 
+              id: selectedNode.id, 
+              children: selectedNode.children
+              }" 
+              @nodeAdded="snackbarNewNode = true" 
+            />
           </v-card>
         </v-col>
 
         <v-col xs="6" sm="4" lg="3" xl="2">
           <!-- Card for node properties -->
           <v-card v-if="selected">
-            <v-card-title class="title white--text" v-bind:class="[selectedNode.type]">{{ nodeTypes.filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}</v-card-title>
+            <v-card-title 
+              class="title white--text" 
+              v-bind:class="[selectedNode.type]">{{ nodeTypes.filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}
+            </v-card-title>
               <v-form>
                 <v-container grid-list-xl>
                   <v-layout wrap>
