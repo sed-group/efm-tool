@@ -31,7 +31,7 @@
       <v-card-text>
         <v-form class="px-3" ref="form">
           <v-text-field v-model="name" label="Name" prepend-icon="folder" :rules="inputRules"></v-text-field>
-          <v-text-field v-model="parent" label="Parent" prepend-icon="mdi-crown">{{ selected.name }}</v-text-field>
+          <!-- <v-text-field v-model="parent" label="Parent" prepend-icon="mdi-crown">{{ selected.id }}</v-text-field> -->
           <v-select v-model="type" label="Type" prepend-icon="mdi-format-list-bulleted-type" :items="allowedChildren(selected.type)" :hint="`${type}`" item-text="nodeType" item-value="abbr" :rules="inputRules">{{ selected.type }}</v-select>
           <v-textarea v-model="description" label="Description" prepend-icon="edit"></v-textarea>
 
@@ -52,9 +52,9 @@ import 'firebase/auth';
 
 export default {
   name: 'PopupNode',
-  props: {
-    selected: null,
-  },
+  props: [
+    'selected'
+  ],
   data() {
     return {
       name: '',
@@ -98,7 +98,8 @@ export default {
           name: this.name,
           description: this.description,
           type: this.type,
-          parent: this.parent,
+          //parent: this.parent,
+          parent: this.selected.id,
           creator: this.user.id,
           project: this.$route.params.id,
         }

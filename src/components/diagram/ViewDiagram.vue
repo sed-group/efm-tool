@@ -32,7 +32,7 @@
             </v-toolbar>
             <div class="canvas">
             </div>
-            <PopupNode :selected="{selected: selected, type: selectedNode.type, name: selectedNode.name, children: selectedNode.children}" @nodeAdded="snackbarNewNode = true" />
+            <PopupNode :selected="{selected: selected, type: selectedNode.type, name: selectedNode.name, id: selectedNode.id, children: selectedNode.children}" @nodeAdded="snackbarNewNode = true" />
           </v-card>
         </v-col>
 
@@ -55,6 +55,7 @@
                         label="Parent"
                         required
                         outlined
+                        disabled
                       ></v-text-field>
                       <v-textarea
                         v-model.lazy="selectedNode.description"
@@ -230,7 +231,7 @@ export default {
 
       // tree and stratify
       const stratify = d3.stratify()
-        .id(d => d.name)
+        .id(d => d.id)
         .parentId(d => d.parent);
 
       const tree = d3.tree()
