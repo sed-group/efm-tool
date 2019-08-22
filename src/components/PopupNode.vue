@@ -26,7 +26,8 @@
 
     <v-card>
       <v-card-title>
-        <h2 class="title">Add a New Node</h2>
+        <!-- TODO add option of constraint -->
+        <h2 class="title">Add a New {{ selected.type == 'FR' ? 'Design Solution' : 'Functional Requirement' }}</h2>
       </v-card-title>
       <v-card-text>
         <v-form class="px-3" ref="form">
@@ -42,7 +43,6 @@
           item-value="abbr" 
           :rules="inputRules"
           >
-            {{ selected.type }}
           </v-select>
           <v-textarea v-model="description" label="Description" prepend-icon="edit"></v-textarea>
 
