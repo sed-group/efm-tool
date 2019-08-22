@@ -191,6 +191,7 @@ export default {
           this.loadingNode = true
           const node = { 
             name: this.selectedNode.name,
+            id: this.selectedNode.id,
             description: this.selectedNode.description,
             type: this.selectedNode.type,
             parent: this.selectedNode.parent,
@@ -380,7 +381,7 @@ export default {
 
         res.docChanges().forEach(change => {
 
-          const doc = {...change.doc.data(), id: change.doc.id};
+          const doc = change.doc.data();
 
           switch (change.type) {
             case 'added':
