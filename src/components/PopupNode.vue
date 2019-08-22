@@ -91,7 +91,10 @@ export default {
     submit() {
       if(this.$refs.form.validate()) {
         this.loading = true
+        let ref = db.collection("nodes").doc();
+        let id = ref.id;
         const node = { 
+          id: id,
           name: this.name,
           description: this.description,
           type: this.type,
@@ -99,7 +102,7 @@ export default {
           creator: this.user.id,
           project: this.$route.params.id,
         }
-        db.collection('nodes').add(node).then(() => {
+        ref.set(node).then(() => {
           this.loading = false
           this.dialog = false
           this.reset()
