@@ -65,13 +65,13 @@
                       outlined
                     ></v-text-field>
                     <!-- This should be a select menu using the real names of the nodes that could be the parents of the selected node -->
-                    <v-text-field
+<!--                     <v-text-field
                       v-model.lazy="selectedNode.parent"
                       label="Parent"
                       required
                       outlined
                       disabled
-                    ></v-text-field>
+                    ></v-text-field> -->
                     <v-textarea
                       v-model.lazy="selectedNode.description"
                       label="Description"
@@ -186,6 +186,7 @@ export default {
   methods: {
     deleteNode() {
       db.collection('nodes').doc(this.selectedNode.id).delete().then(() => {
+        //this.selected = false;
         this.snackbarDeletedNode = true;
       })
       .catch(function(error) {
@@ -204,25 +205,25 @@ export default {
       } else {
         console.log('Something changed')
         // save to database
-        if(true) {
-          this.loadingNode = true
-          const node = { 
-            name: this.selectedNode.name,
-            id: this.selectedNode.id,
-            description: this.selectedNode.description,
-            type: this.selectedNode.type,
-            parent: this.selectedNode.parent,
-            creator: this.userSlug,
-            project: this.$route.params.id,
-          }
-          db.collection('nodes').doc(this.selectedNode.id).set(node).then(() => {
-            this.loadingNode = false
-            this.snackbarUpdatedNode = true;
-          })
-          .catch(function(error) {
-              console.error("Error writing document: ", error);
-          });
+        this.loadingNode = true
+        const node = { 
+          name: this.selectedNode.name,
+          id: this.selectedNode.id,
+          description: this.selectedNode.description,
+          type: this.selectedNode.type,
+          parent: this.selectedNode.parent,
+          creator: this.userSlug,
+          project: this.$route.params.id,
         }
+        db.collection('nodes').doc(this.selectedNode.id).set(node).then(() => {
+          //this.selected = false;
+          this.loadingNode = false;
+          this.snackbarUpdatedNode = true;
+        })
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+
       }
     },
     createSvg(){
