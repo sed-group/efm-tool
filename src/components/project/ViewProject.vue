@@ -5,10 +5,10 @@
         <v-col cols="12">
           <v-expansion-panels>
             <v-expansion-panel>
-              <v-expansion-panel-header>Project: {{ project.title }}</v-expansion-panel-header>
+              <v-expansion-panel-header>Project: {{ project ? project.title : 'Project Title' }}</v-expansion-panel-header>
               <v-expansion-panel-content>
 
-                <v-form>
+                <v-form v-if="project">
                     <v-container>
                         <v-row>
                             <v-col cols="12" md="4">
