@@ -376,10 +376,10 @@ export default {
           .attr('class', d => d.data.type)
           .attr('stroke', '#555')
           .attr('stroke-width', 1)
-          .attr('width', d => d.data.name.length * 10 + 10)
+          .attr('width', d => d.data.name.length <= 10 ? d.data.name.length * 10 + 10 : 110)
           .attr('height', 50)
           .attr('transform', (d) => { // (d,i,n)
-            let x = (d.data.name.length * 5 + 5);
+            let x = (d.data.name.length <= 10 ? d.data.name.length * 5 + 5 : 55);
             return `translate(${-x}, -25)`
           });
 
@@ -387,7 +387,15 @@ export default {
           .attr('text-anchor', 'middle')
           .attr('dy', 5)
           .attr('fill', 'white')
-          .text(d => d.data.name); 
+          .style('font', 'normal 12px Arial')
+          .text(d => d.data.name.length <= 10 ? d.data.name : d.data.name.substring(0,10) + '...'); 
+
+        enterNodes.append('text')
+          .attr('text-anchor', 'middle')
+          .attr('dy', -12)
+          .attr('fill', d => d.data.type == 'FR' ? '#0D47A1' : d.data.type == 'DS' ? '#FF6F00' : '#FFFFFF' )
+          .style('font', 'normal 8px Arial')
+          .text(d => d.data.type); 
 
       };
 
