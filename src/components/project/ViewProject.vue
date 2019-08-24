@@ -185,7 +185,10 @@ export default {
   },
   created(){
     this.$store.dispatch('setProjectAction', this.$route.params.id)
-  }
+  },
+  mounted(){
+    // Do like in ViewDiagram, including some update function?
+  },
 }
 </script>
 
