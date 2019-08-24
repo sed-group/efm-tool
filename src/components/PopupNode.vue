@@ -26,13 +26,24 @@
 
     <v-card>
       <v-card-title>
-        <h2 class="title">Add a New Node</h2>
+        <!-- TODO add option of constraint -->
+        <h2 class="title">Add a New {{ selected.type == 'FR' ? 'Design Solution' : 'Functional Requirement' }}</h2>
       </v-card-title>
       <v-card-text>
         <v-form class="px-3" ref="form">
           <v-text-field v-model="name" label="Name" prepend-icon="folder" :rules="inputRules"></v-text-field>
-          <v-text-field v-model="parent" label="Parent" prepend-icon="mdi-crown">{{ selected.name }}</v-text-field>
-          <v-select v-model="type" label="Type" prepend-icon="mdi-format-list-bulleted-type" :items="allowedChildren(selected.type)" :hint="`${type}`" item-text="nodeType" item-value="abbr" :rules="inputRules">{{ selected.type }}</v-select>
+          <!-- <v-text-field v-model="parent" label="Parent" prepend-icon="mdi-crown">{{ selected.id }}</v-text-field> -->
+          <v-select 
+          v-model="type" 
+          label="Type" 
+          prepend-icon="mdi-format-list-bulleted-type" 
+          :items="allowedChildren(selected.type)" 
+          :hint="`${type}`" 
+          item-text="nodeType" 
+          item-value="abbr" 
+          :rules="inputRules"
+          >
+          </v-select>
           <v-textarea v-model="description" label="Description" prepend-icon="edit"></v-textarea>
 
           <v-spacer></v-spacer>
@@ -52,9 +63,9 @@ import 'firebase/auth';
 
 export default {
   name: 'PopupNode',
-  props: {
-    selected: null,
-  },
+  props: [
+    'selected'
+  ],
   data() {
     return {
       name: '',
@@ -91,15 +102,19 @@ export default {
     submit() {
       if(this.$refs.form.validate()) {
         this.loading = true
+        let ref = db.collection("nodes").doc();
+        let id = ref.id;
         const node = { 
+          id: id,
           name: this.name,
           description: this.description,
           type: this.type,
-          parent: this.parent,
+          //parent: this.parent,
+          parent: this.selected.id,
           creator: this.user.id,
           project: this.$route.params.id,
         }
-        db.collection('nodes').add(node).then(() => {
+        ref.set(node).then(() => {
           this.loading = false
           this.dialog = false
           this.reset()

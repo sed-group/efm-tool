@@ -13,15 +13,15 @@
                   <v-icon>mdi-download</v-icon>
                 </v-btn>
 
-                <v-btn icon>
+                <v-btn icon v-if="false"> <!-- Don't show until function developed -->
                   <v-icon>mdi-magnify-plus-outline</v-icon>
                 </v-btn>
 
-                <v-btn icon>
+                <v-btn icon v-if="false"> <!-- Don't show until function developed -->
                   <v-icon>mdi-backup-restore</v-icon>
                 </v-btn>
 
-                <v-btn icon>
+                <v-btn icon v-if="false"> <!-- Don't show until function developed -->
                   <v-icon>mdi-magnify-minus-outline</v-icon>
                 </v-btn>
 
@@ -30,70 +30,87 @@
                 </v-btn>
               </v-toolbar-items>
             </v-toolbar>
+            <!-- This is where the d3 svg is loaded -->
             <div class="canvas">
             </div>
-            <PopupNode :selected="{selected: selected, type: selectedNode.type, name: selectedNode.name, children: selectedNode.children}" @nodeAdded="snackbarNewNode = true" />
+            <!-- This is where the node add button is loaded -->
+            <PopupNode 
+            :selected="{
+              selected: selected, 
+              type: selectedNode.type, 
+              name: selectedNode.name, 
+              id: selectedNode.id, 
+              children: selectedNode.children
+              }" 
+              @nodeAdded="snackbarNewNode = true" 
+            />
           </v-card>
         </v-col>
 
         <v-col xs="6" sm="4" lg="3" xl="2">
           <!-- Card for node properties -->
           <v-card v-if="selected">
-            <v-card-title class="title white--text" v-bind:class="[selectedNode.type]">{{ nodeTypes.filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}</v-card-title>
-              <v-form>
-                <v-container grid-list-xl>
-                  <v-layout wrap>
-                    <v-flex xs12>
-                      <v-text-field
-                        v-model.lazy="selectedNode.name"
-                        label="Name"
-                        required
-                        outlined
-                      ></v-text-field>
-                      <v-text-field
-                        v-model.lazy="selectedNode.parent"
-                        label="Parent"
-                        required
-                        outlined
-                      ></v-text-field>
-                      <v-textarea
-                        v-model.lazy="selectedNode.description"
-                        label="Description"
-                        outlined
-                      ></v-textarea>
-                    </v-flex>
+            <v-card-title 
+              class="title white--text" 
+              v-bind:class="[selectedNode.type]">{{ nodeTypes.filter(obj => { return obj.abbr === selectedNode.type })[0].nodeType }}
+            </v-card-title>
+            <v-form>
+              <v-container grid-list-xl>
+                <v-layout wrap>
+                  <v-flex xs12>
+                    <v-text-field
+                      v-model.lazy="selectedNode.name"
+                      label="Name"
+                      required
+                      outlined
+                    ></v-text-field>
+                    <!-- This should be a select menu using the real names of the nodes that could be the parents of the selected node -->
+<!--                     <v-text-field
+                      v-model.lazy="selectedNode.parent"
+                      label="Parent"
+                      required
+                      outlined
+                      disabled
+                    ></v-text-field> -->
+                    <v-textarea
+                      v-model.lazy="selectedNode.description"
+                      label="Description"
+                      outlined
+                    ></v-textarea>
+                    <div class="caption grey--text">{{ selectedNode.id }}</div>
+                  </v-flex>
 
-                    <v-flex xs12>
-                      <v-btn
-                        color="success"
-                        class="ma-1"
-                        @click="saveNodeChanges()"
-                        :loading="loadingNode"
-                        small
-                      >
-                        Save
-                      </v-btn>
-                      <v-btn
-                        color="warning"
-                        class="ma-1"
-                        @click="discardNodeChanges()"
-                        :loading="loadingNode"
-                        small
-                      >
-                        Reset
-                      </v-btn>
-                      <v-btn
-                        color="error"
-                        class="ma-1"
-                        @click="deleteNode()"
-                        small
-                      >
-                        Delete
-                      </v-btn>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-form>
+                  <v-flex xs12>
+                    <v-btn
+                      color="success"
+                      class="ma-1"
+                      @click="saveNodeChanges()"
+                      :loading="loadingNode"
+                      small
+                    >
+                      Save
+                    </v-btn>
+                    <v-btn
+                      color="warning"
+                      class="ma-1"
+                      @click="discardNodeChanges()"
+                      :loading="loadingNode"
+                      small
+                    >
+                      Reset
+                    </v-btn>
+                    <v-btn
+                      color="error"
+                      class="ma-1"
+                      @click="deleteNode()"
+                      small
+                    >
+                      Delete
+                    </v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-form>
           </v-card>
         </v-col>
 
@@ -169,6 +186,7 @@ export default {
   methods: {
     deleteNode() {
       db.collection('nodes').doc(this.selectedNode.id).delete().then(() => {
+        //this.selected = false;
         this.snackbarDeletedNode = true;
       })
       .catch(function(error) {
@@ -187,24 +205,25 @@ export default {
       } else {
         console.log('Something changed')
         // save to database
-        if(true) {
-          this.loadingNode = true
-          const node = { 
-            name: this.selectedNode.name,
-            description: this.selectedNode.description,
-            type: this.selectedNode.type,
-            parent: this.selectedNode.parent,
-            creator: this.userSlug,
-            project: this.$route.params.id,
-          }
-          db.collection('nodes').doc(this.selectedNode.id).set(node).then(() => {
-            this.loadingNode = false
-            this.snackbarUpdatedNode = true;
-          })
-          .catch(function(error) {
-              console.error("Error writing document: ", error);
-          });
+        this.loadingNode = true
+        const node = { 
+          name: this.selectedNode.name,
+          id: this.selectedNode.id,
+          description: this.selectedNode.description,
+          type: this.selectedNode.type,
+          parent: this.selectedNode.parent,
+          creator: this.userSlug,
+          project: this.$route.params.id,
         }
+        db.collection('nodes').doc(this.selectedNode.id).set(node).then(() => {
+          //this.selected = false;
+          this.loadingNode = false;
+          this.snackbarUpdatedNode = true;
+        })
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+
       }
     },
     createSvg(){
@@ -228,7 +247,7 @@ export default {
 
       // tree and stratify
       const stratify = d3.stratify()
-        .id(d => d.name)
+        .id(d => d.id)
         .parentId(d => d.parent);
 
       const tree = d3.tree()
@@ -358,10 +377,10 @@ export default {
           .attr('class', d => d.data.type)
           .attr('stroke', '#555')
           .attr('stroke-width', 1)
-          .attr('width', d => d.data.name.length * 10 + 10)
+          .attr('width', d => d.data.name.length <= 10 ? d.data.name.length * 10 + 10 : 110)
           .attr('height', 50)
           .attr('transform', (d) => { // (d,i,n)
-            let x = (d.data.name.length * 5 + 5);
+            let x = (d.data.name.length <= 10 ? d.data.name.length * 5 + 5 : 55);
             return `translate(${-x}, -25)`
           });
 
@@ -369,7 +388,15 @@ export default {
           .attr('text-anchor', 'middle')
           .attr('dy', 5)
           .attr('fill', 'white')
-          .text(d => d.data.name); 
+          .style('font', 'normal 12px Arial')
+          .text(d => d.data.name.length <= 10 ? d.data.name : d.data.name.substring(0,10) + '...'); 
+
+        enterNodes.append('text')
+          .attr('text-anchor', 'middle')
+          .attr('dy', -12)
+          .attr('fill', d => d.data.type == 'FR' ? '#0D47A1' : d.data.type == 'DS' ? '#FF6F00' : '#FFFFFF' )
+          .style('font', 'normal 8px Arial')
+          .text(d => d.data.type); 
 
       };
 
@@ -380,7 +407,7 @@ export default {
 
         res.docChanges().forEach(change => {
 
-          const doc = {...change.doc.data(), id: change.doc.id};
+          const doc = change.doc.data();
 
           switch (change.type) {
             case 'added':

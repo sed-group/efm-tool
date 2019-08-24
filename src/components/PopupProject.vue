@@ -68,8 +68,18 @@ export default {
           this.reset()
           this.resetValidation()
           // insert first element to the diagram
-          let node = {name: 'Click me', project: docRef.id, type: 'FR', description: '', parent:'', creator: this.user.id}
-          db.collection('nodes').add(node).then(() => {
+          let ref = db.collection("nodes").doc();
+          let id = ref.id;
+          let node = { 
+            id: id,
+            name: 'Click me',
+            description: this.description,
+            type: 'FR',
+            parent: '',
+            creator: this.user.id,
+            project: docRef.id,
+          }
+          ref.set(node).then(() => {
             //this.$emit('nodeAdded')
           })
           //this.$emit('projectAdded')

@@ -1,4 +1,5 @@
 import db from '@/fb'
+import router from '@/router'
 
 export default {
   setProjectAction({commit}, payload) {
