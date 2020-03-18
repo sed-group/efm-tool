@@ -8,6 +8,7 @@ import Signup from './components/auth/Signup.vue'
 import Login from './components/auth/Login.vue'
 import ViewProfile from './components/profile/ViewProfile.vue'
 import ViewProject from './components/project/ViewProject.vue'
+import ViewProjectAlt from './components/project/ViewProjectAlt.vue'
 import Docs from './components/documentation/Docs.vue'
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -72,6 +73,14 @@ const router = new Router({
       path: '/project/:id',
       name: 'ViewProject',
       component: ViewProject,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/projectAlt/:id',
+      name: 'ViewProjectAlt',
+      component: ViewProjectAlt,
       meta: {
         requiresAuth: true
       }
